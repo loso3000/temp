@@ -1,2 +1,3 @@
-# temp
-temp
+My OpenWRT-Compile
+
+Target:X64 REDMI-AC2100 R4S R2S
