@@ -1,0 +1,168 @@
+name: build-I-openwrt
+on:
+  # push:
+  #   paths: [ immortalwrt_openwrt ]
+  # schedule: [ cron: 0 2 */7 * * ]
+  # watch:
+  #   types: started
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: '选择ImmortalWrt仓库的分支：'
+        default: 'openwrt-18.06-k5.4'
+        required: true
+        type: choice
+        options: [ openwrt-18.06-k5.4, openwrt-21.02, master, openwrt-18.06, openwrt-18.06-dev ]
+      target:
+        description: '选择要生成firmware的机型：'
+        default: 'x86_64'
+        required: true
+        type: choice
+        options: [ x86_64, newifi-d2, r4s, r2r, r2c, phicomm_k2p, armvirt_64_Default, asus_rt-n16 ]
+      version:
+        description: '选择要生成版本： super(极致), mini(精简)，plus(全家桶) ，dz(定制）'
+        default: 'super'
+        required: true
+        type: choice
+        options: [super,mini,plus,dz]
+      partsize:
+        description: '设置rootfs大小：（选填,只适用x86_64，r系列，armvirt）'
+        required: false
+
+env:
+  UPLOAD_RELEASE: true
+  UPLOAD_PACKAGES: true
+  UPLOAD_SYSUPGRADE: true
+  UPLOAD_BIN_DIR: true
+  UPLOAD_COWTRANSFER: true
+  UPLOAD_WETRANSFER: true
+  REPO_FLODER: openwrt
+
+jobs:
+  immo-openwrt:
+    name: immortalwrt-${{ github.event.inputs.target }}
+    runs-on: ubuntu-20.04
+    continue-on-error: true
+
+    env:
+      VERSION: ${{ github.event.inputs.version }}
+      PARTSIZE: ${{ github.event.inputs.partsize }}
+      REPO_BRANCH: ${{ github.event.inputs.branch }}
+      TARGET_DEVICE: ${{ github.event.inputs.target }}
+
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     target: ["${{ github.event.inputs.target }}"]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: 初始环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        chmod +x ./init_build_environment.sh
+        sudo ./init_build_environment.sh &
+
+    - name: 运行自定义
+      run: curl -fsSL git.io/J6IXO | /bin/bash
+
+    - name: 下载软件包
+      run: |
+        cd $REPO_FLODER
+        make download -j16
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Cache
+      uses: klever1988/cachewrtbuild@test
+      continue-on-error: true
+      if: env.CACHE_ACTIONS == 'true'
+      with:
+        ccache: 'true'
+        mixkey: ${{env.REPO_BRANCH}}-${{env.ARCH}}-
+        prefix: ${{github.workspace}}/${{env.REPO_FLODER}}
+
+    - name: 固件编译
+      timeout-minutes: 1440
+      id: compile
+      run: |
+        cd $REPO_FLODER
+        make -j$(($(nproc)+2)) || make -j1 V=s
+        echo "::set-output name=status::success"
+        echo "======================="
+        echo "磁盘使用情况:"
+        echo "======================="
+        df -hT
+        echo "======================="
+        du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+        du -h --max-depth=1 ./build_dir
+        du -h --max-depth=1 ./bin
+        
+    - name: 筛选固件
+      id: organize
+      if: steps.compile.outputs.status == 'success' && !cancelled()
+      run: |
+        ls $REPO_FLODER/bin/targets/*/*/
+        mkdir -p firmware
+        cp -v $(find $REPO_FLODER/bin/targets/ -type f -name "*${FIRMWARE_TYPE}*" -o -name "sha256sums") firmware
+        tar -zcPf firmware/${TARGET_DEVICE}-packages.tar.gz $REPO_FLODER/bin/packages/
+        cp -v $REPO_FLODER/.config firmware/${TARGET_DEVICE}_config.txt
+        cd firmware
+        gzip *.img
+        mv sha256sums ${TARGET_DEVICE}_sha256sums
+        echo "FIRMWARE=$PWD" >>$GITHUB_ENV
+        echo "STRDATE=$(date +%Y-%m-%d)" >>$GITHUB_ENV
+        echo "::set-output name=status::success"
+        
+    - name: 上传bin包
+      uses: actions/upload-artifact@v2
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true' && !cancelled()
+      with:
+        name: OpenWrt-${{env.TARGET_DEVICE}}-bin
+        path: ${{env.REPO_FLODER}}/bin
+
+    - name: 上传packages包
+      uses: actions/upload-artifact@v2
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_PACKAGES == 'true' && !cancelled()
+      with:
+        name: OpenWrt-${{env.TARGET_DEVICE}}-package
+        path: ${{env.REPO_FLODER}}/bin/packages
+
+    - name: 上传firmware
+      uses: actions/upload-artifact@v2
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_SYSUPGRADE == 'true' && !cancelled()
+      with:
+        name: OpenWrt-${{env.TARGET_DEVICE}}-firmware
+        path: firmware/*${{env.FIRMWARE_TYPE}}*
+
+    - name: 上传到奶牛快传
+      id: cowtransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(grep https cowtransfer.log)"
+        echo "::set-output name=url::$(grep https cowtransfer.log | cut -f3 -d" ")"
+
+    - name: 上传到WeTransfer
+      id: wetransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wet -s -p 16 --no-progress $FIRMWARE 2>&1 | tee wetransfer.log
+        echo "::warning file=wetransfer.com::$(grep https wetransfer.log)"
+        echo "::set-output name=url::href='$(grep https wetransfer.log | cut -f3 -d" ")' target='_blank'"
+
+    - name: 上传到 release
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: firmware/*
+        file_glob: true
+        overwrite: true
+        tag: ${{env.STRDATE}}
+        repo_token: ${{secrets.GITHUB_TOKEN}}
+        release_name: ${{env.STRDATE}} 自动发布
