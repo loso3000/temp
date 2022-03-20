@@ -308,10 +308,10 @@ curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/powero
 rm -rf feeds/*/*/{luci-app-appfilter,open-app-filter}
 
 clone_url "
-    https://github.com/fw876/helloworld
+    # https://github.com/fw876/helloworld
     https://github.com/sirpdboy/build/
     https://github.com/sirpdboy/sirpdboy-package/
-    https://github.com/kiddin9/openwrt-bypass
+    # https://github.com/kiddin9/openwrt-bypass
     https://github.com/xiaorouji/openwrt-passwall
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
@@ -323,9 +323,9 @@ clone_url "
     https://github.com/zxlhhyccc/luci-app-v2raya.git
     https://github.com/immortalwrt/luci-app-unblockneteasemusic.git
     https://github.com/kiddin9/luci-app-dnsfilter
-    https://github.com/jerrykuku/luci-app-vssr #bash
+    https://github.com/jerrykuku/luci-app-vssr
     https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall
-    https://github.com/sirpdboy/build/trunk/pass/luci-app-ssr-plus
+    # https://github.com/sirpdboy/build/trunk/pass/luci-app-ssr-plus
     https://github.com/sirpdboy/luci-theme-opentopd.git
     https://github.com/jerrykuku/luci-theme-argon.git
     https://github.com/kiddin9/luci-theme-edge.git
@@ -675,11 +675,7 @@ case "$TARGET_DEVICE" in
     luci-app-aliyundrive-webdav
     "
     }
-    [[  $VERSION = dz ||  $VERSION = super ]] && {
-    clone_url "
-    https://github.com/sirpdboy/build/trunk/pass/luci-app-bypass
-    "
-    }
+
     sed -i 's/qbittorrent_dynamic:qbittorrent/qbittorrent_dynamic:qBittorrent-Enhanced-Edition/g' package/feeds/luci/luci-app-qbittorrent/Makefile
     sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
     wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
