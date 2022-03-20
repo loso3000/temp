@@ -149,7 +149,7 @@ case "$TARGET_DEVICE" in
         # CONFIG_GRUB_CONSOLE is not set
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
-        EOF
+EOF
     ;;
     "r4s"|"r2c"|"r2r")
         cat >.config<<-EOF
@@ -163,21 +163,21 @@ case "$TARGET_DEVICE" in
         CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
-        EOF
+EOF
     ;;
     "newifi-d2")
         cat >.config<<-EOF
         CONFIG_TARGET_ramips=y
         CONFIG_TARGET_ramips_mt7621=y
         CONFIG_TARGET_ramips_mt7621_DEVICE_d-team_newifi-d2=y
-        EOF
+EOF
     ;;
     "phicomm_k2p")
         cat >.config<<-EOF
         CONFIG_TARGET_ramips=y
         CONFIG_TARGET_ramips_mt7621=y
         CONFIG_TARGET_ramips_mt7621_DEVICE_phicomm_k2p=y
-        EOF
+EOF
     ;;
     "asus_rt-n16")
         if [[ "${REPO_BRANCH#*-}" = "18.06" || "${REPO_BRANCH#*-}" = "18.06-dev" ]]; then
@@ -185,14 +185,14 @@ case "$TARGET_DEVICE" in
             CONFIG_TARGET_brcm47xx=y
             CONFIG_TARGET_brcm47xx_mips74k=y
             CONFIG_TARGET_brcm47xx_mips74k_DEVICE_asus_rt-n16=y
-            EOF
+EOF
         else
             cat >.config<<-EOF
             CONFIG_TARGET_bcm47xx=y
             CONFIG_TARGET_bcm47xx_mips74k=y
             CONFIG_TARGET_bcm47xx_mips74k_DEVICE_asus_rt-n16=y
             # CONFIG_TARGET_IMAGES_GZIP is not set
-            EOF
+EOF
         fi
     ;;
     "armvirt_64_Default")
@@ -200,7 +200,7 @@ case "$TARGET_DEVICE" in
         CONFIG_TARGET_armvirt=y
         CONFIG_TARGET_armvirt_64=y
         CONFIG_TARGET_armvirt_64_Default=y
-        EOF
+EOF
     ;;
 esac
 
@@ -270,7 +270,7 @@ esac
     # CONFIG_LUCI_LANG_zh-cn=y
     CONFIG_LUCI_LANG_zh_Hans=y
     CONFIG_DEFAULT_SETTINGS_OPTIMIZE_FOR_CHINESE=y
-    EOF
+EOF
 
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
@@ -363,7 +363,7 @@ tee -a $(find package/A/ feeds/luci/applications/ -type f -name "white.list" -or
         /usr/lib/python$(PYTHON3_VERSION)/uuid.py \
         /usr/lib/python$(PYTHON3_VERSION)/lib-dynload/_uuid.$(PYTHON3_SO_SUFFIX) \
     ))
-    EOF
+EOF
 
 sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vssr/root/etc/config/vssr
 
@@ -799,5 +799,4 @@ echo "CACHE_ACTIONS=true" >> $GITHUB_ENV
 echo "DEVICE_NAME=$DEVICE_NAME" >>$GITHUB_ENV
 echo "FIRMWARE_TYPE=$FIRMWARE_TYPE" >>$GITHUB_ENV
 echo "ARCH=`awk -F'"' '/^CONFIG_TARGET_ARCH_PACKAGES/{print $2}' .config`" >>$GITHUB_ENV
-
 echo -e "\e[1;35m脚本运行完成！\e[0m"
