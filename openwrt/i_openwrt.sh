@@ -34,7 +34,7 @@ wget -qO- $OPENCLASH_MAIN_URL | tar xOvz > files/etc/openclash/core/clash
 # wget -qO- $OFFICAL_OPENCLASH_MAIN_URL | gunzip -c > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
 wget -qO- $CLASH_GAME_URL | tar xOvz > files/etc/openclash/core/clash_game
-
+echo -e "$(color cy 'clash-$1 内核下载成功！....')\c"
 chmod +x files/etc/openclash/core/clash*
 }
 
@@ -49,6 +49,7 @@ status() {
 	else
 		printf "%35s %s %s %s %s %s %s\n" \
 		`echo -e "[ $(color cr ✕)\033[0;39m ]${_date}"`
+		exit 1
 	fi
 }
 
@@ -203,7 +204,7 @@ case "$TARGET_DEVICE" in
 	;;
 esac
 
-cat >>.config<<-EOF
+	cat >>.config<<-EOF
 	CONFIG_KERNEL_BUILD_USER="win3gp"
 	CONFIG_KERNEL_BUILD_DOMAIN="OpenWrt"
 	CONFIG_GRUB_TIMEOUT="0"
@@ -269,7 +270,7 @@ cat >>.config<<-EOF
 	# CONFIG_LUCI_LANG_zh-cn=y
 	CONFIG_LUCI_LANG_zh_Hans=y
 	CONFIG_DEFAULT_SETTINGS_OPTIMIZE_FOR_CHINESE=y
-EOF
+	EOF
 
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
@@ -384,7 +385,7 @@ tee -a $(find package/A/ feeds/luci/applications/ -type f -name "white.list" -or
 # echo '<iframe src="https://ip.skk.moe/simple" style="width: 100%; border: 0"></iframe>' | \
 # tee -a {$(find package/A/ feeds/luci/applications/ -type d -name "luci-app-vssr")/*/*/*/status_top.htm,$(find package/A/ feeds/luci/applications/ -type d -name "luci-app-ssr-plus")/*/*/*/status.htm,$(find package/A/ feeds/luci/applications/ -type d -name "luci-app-bypass")/*/*/*/status.htm,$(find package/A/ feeds/luci/applications/ -type d -name "luci-app-passwall")/*/*/*/global/status.htm} >/dev/null
 
-cat <<-\EOF >feeds/packages/lang/python/python3/files/python3-package-uuid.mk
+	cat <<-\EOF >feeds/packages/lang/python/python3/files/python3-package-uuid.mk
 	define Package/python3-uuid
 	$(call Package/python3/Default)
 	  TITLE:=Python $(PYTHON3_VERSION) UUID module
@@ -395,7 +396,7 @@ cat <<-\EOF >feeds/packages/lang/python/python3/files/python3-package-uuid.mk
 		/usr/lib/python$(PYTHON3_VERSION)/uuid.py \
 		/usr/lib/python$(PYTHON3_VERSION)/lib-dynload/_uuid.$(PYTHON3_SO_SUFFIX) \
 	))
-EOF
+	EOF
 
 sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vssr/root/etc/config/vssr
 
@@ -813,9 +814,10 @@ chmod +x ./package/*/*/root/etc/init.d/*
 chmod +x ./package/*/*/root/usr/*/*  
 chmod +x ./package/*/*/*/root/etc/init.d/*  
 chmod +x ./package/*/*/*/root/usr/*/*
-
 status
+
 echo -e "$(color cy '更新配置....')\c"
+sed -i 's/^[ \t]*//g' ./.config
 make defconfig 1>/dev/null 2>&1
 status
 
@@ -830,5 +832,5 @@ echo "CACHE_ACTIONS=true" >> $GITHUB_ENV
 echo "DEVICE_NAME=$DEVICE_NAME" >>$GITHUB_ENV
 echo "FIRMWARE_TYPE=$FIRMWARE_TYPE" >>$GITHUB_ENV
 echo "ARCH=`awk -F'"' '/^CONFIG_TARGET_ARCH_PACKAGES/{print $2}' .config`" >>$GITHUB_ENV
-  
+
 echo -e "\e[1;35m脚本运行完成！\e[0m"
