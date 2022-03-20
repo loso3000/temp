@@ -290,7 +290,7 @@ sed -i 's/bootstrap/opentopd/g' feeds/luci/collections/luci/Makefile
 sed -i 's/option commit_interval 24h/option commit_interval 4h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为2
 sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/banner > ./package/base-files/files/etc/banner
-curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/profile > > package/base-files/files/etc/profile
+curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/profile > package/base-files/files/etc/profile
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 sed -i 's/16384/165535/g' ./package/kernel/linux/files/sysctl-nf-conntrack.conf
