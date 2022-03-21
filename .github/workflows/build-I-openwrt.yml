@@ -112,7 +112,7 @@ jobs:
         tar -zcPf firmware/${TARGET_DEVICE}-packages.tar.gz $REPO_FLODER/bin/packages/
         cp -v $REPO_FLODER/.config firmware/${TARGET_DEVICE}_config.txt
         cd firmware
-        gzip *.img
+        #gzip *.img
         mv sha256sums ${TARGET_DEVICE}_sha256sums
         echo "FIRMWARE=$PWD" >>$GITHUB_ENV
         echo "STRDATE=$(date +%Y-%m-%d)" >>$GITHUB_ENV
