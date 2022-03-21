@@ -36,7 +36,7 @@ env:
   UPLOAD_BIN_DIR: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
-  REPO_FLODER: openwrt
+  REPO_FLODER: lede
 
 jobs:
   immo-openwrt:
