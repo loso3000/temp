@@ -730,39 +730,13 @@ sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP�
 sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' ./feeds/luci/modules/luci-base/po/zh-cn/base.po   #用户名密码
 
 #version
-case "$VERSION" in
-    "mini")
-                date1='Ipv6-Mini S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-        ;;
-    "plus")
-                date1='Ipv6-Plus S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-        ;;
-    "dz")
-                date1='Ipv6-Dz S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-        ;;
-    "*")
-                date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-        ;;
-    esac
-    
-case "$KERNEL_VER" in
-    "5.4")
-       sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-$KERNEL_VER-${VERSION}-/g" include/image.mk
-       ;;
-    "5.10")
+date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
+   
+sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-'$KERNEL_VER'-'${VERSION}'-/g" include/image.mk
 
-            sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.10-${VERSION}-/g" include/image.mk
-        ;;
-    "5.15")
-        sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.15-${VERSION}-/g" include/image.mk
-        ;;
-    "*")
-        sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-${VERSION}-/g" include/image.mk
-        ;;
-    esac 
 echo "set=---------date1:${date1}--KERNEL_VER:${KERNEL_VER}--VERSION:$VERSION------------------"
-echo "DISTRIB_REVISION=${date1} by Sirpdboy"
-echo "DISTRIB_REVISION=${date1} by Sirpdboy" > ./package/base-files/files/etc/openwrt_release1
+echo "DISTRIB_REVISION='${date1}' by Sirpdboy"
+echo "DISTRIB_REVISION='${date1}' by Sirpdboy" > ./package/base-files/files/etc/openwrt_release1
 echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 chmod +x ./package/*/root/etc/init.d/*  
