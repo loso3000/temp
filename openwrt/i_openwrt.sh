@@ -267,12 +267,17 @@ config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
 sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
+rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns}
+rm -rf package/*/{autocore,autosamba,default-settings}
+rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier,luci-app-wrtbwmon,luci-app-koolddns}
+
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
 rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
 rm -rf ./feeds/packages/net/smartdns
+rm -rf ./feeds/packages/net/wrtbwmon
 rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/packages/admin/netdata
 rm -rf ./feeds/luci/applications/luci-app-dockerman
@@ -281,9 +286,6 @@ rm -rf ./feeds/luci/applications/luci-app-samba
 rm -rf ./feeds/luci/applications/luci-app-wol
 rm -rf ./feeds/luci/applications/luci-app-unblockneteasemusic
 rm -rf ./feeds/luci/applications/luci-app-accesscontrol
-
-rm -rf package/*/{autocore,autosamba,default-settings}
-rm -rf feeds/*/*/{luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier}
 
 wget -qO package/base-files/files/etc/banner https://raw.githubusercontent.com/sirpdboy/build/master/banner
 wget -qO package/base-files/files/etc/profile https://raw.githubusercontent.com/sirpdboy/build/master/profile
@@ -372,7 +374,7 @@ EOF
 
 sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vssr/root/etc/config/vssr
 
-[[ $TARGET_DEVICE = phicomm_k2p || $VERSION = pure ]] || {
+[[ $TARGET_DEVICE = phicomm_k2p || $VERSION = super ]] || {
     _packages "
     automount autosamba-samba4 axel kmod-rt2500-usb kmod-rtl8187
     luci-app-aria2
@@ -383,6 +385,7 @@ sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vss
     luci-app-transmission
     luci-app-usb-printer
     luci-app-vssr
+    luci-app-ssr-plus
     luci-app-bypass
     luci-app-passwall
     luci-app-openclash
@@ -543,18 +546,18 @@ case "$TARGET_DEVICE" in
     #USB_net_driver
     kmod-mt76 kmod-mt76x2u kmod-rtl8821cu kmod-rtl8192cu kmod-rtl8812au-ac
     kmod-usb-net-asix-ax88179 kmod-usb-net-cdc-ether kmod-usb-net-rndis
-    usb-modeswitch kmod-usb-net-rtl8152-vendor
+    usb-modeswitch kmod-usb-net-rtl8152
     #docker
     kmod-dm kmod-dummy kmod-ikconfig kmod-veth
     kmod-nf-conntrack-netlink kmod-nf-ipvs
     #x86
-    acpid ath10k-firmware-qca9888 autosamba-samba4
+    acpid ath10k-firmware-qca9888 autosamba-samba4 kmod-igc
     ath10k-firmware-qca988x ath10k-firmware-qca9984
     brcmfmac-firmware-43602a1-pcie irqbalance wget kmod-ntfs-3g
     kmod-alx kmod-ath10k kmod-bonding kmod-drm-ttm
     kmod-igbvf kmod-iwlwifi kmod-ixgbevf e2fsprogs wget
     kmod-mmc-spi kmod-r8168 kmod-rtl8xxxu kmod-sdhci ppp-mod-pptp xl2tpd uqmi
-    kmod-tg3 lm-sensors-detect qemu-ga snmpd kmod-vmxnet3 f2fs-tools f2fsck resize2fs
+    kmod-tg3 lm-sensors-detect snmpd kmod-vmxnet3 f2fs-tools f2fsck resize2fs
     "
     [[  $VERSION = mini || $VERSION = dz ]] && {
     _packages "
