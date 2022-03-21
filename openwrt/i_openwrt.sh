@@ -527,7 +527,7 @@ case "$TARGET_DEVICE" in
     kmod-dm kmod-dummy kmod-ikconfig kmod-veth
     kmod-nf-conntrack-netlink kmod-nf-ipvs
     #x86
-    acpid alsa-utils ath10k-firmware-qca9888 autosamba-samba4
+    acpid ath10k-firmware-qca9888 autosamba-samba4
     ath10k-firmware-qca988x ath10k-firmware-qca9984
     brcmfmac-firmware-43602a1-pcie irqbalance wget kmod-ntfs-3g
     kmod-alx kmod-ath10k kmod-bonding kmod-drm-ttm
