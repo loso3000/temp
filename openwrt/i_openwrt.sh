@@ -265,6 +265,7 @@ EOF
 
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
+sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
@@ -276,9 +277,13 @@ rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/packages/admin/netdata
 rm -rf ./feeds/luci/applications/luci-app-dockerman
 rm -rf ./feeds/luci/applications/luci-app-samba4
+rm -rf ./feeds/luci/applications/luci-app-samba
+rm -rf ./feeds/luci/applications/luci-app-wol
 rm -rf ./feeds/luci/applications/luci-app-unblockneteasemusic
 rm -rf ./feeds/luci/applications/luci-app-accesscontrol
-sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
+
+rm -rf package/*/{autocore,autosamba,default-settings}
+rm -rf feeds/*/*/{luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier}
 
 wget -qO package/base-files/files/etc/banner https://raw.githubusercontent.com/sirpdboy/build/master/banner
 wget -qO package/base-files/files/etc/profile https://raw.githubusercontent.com/sirpdboy/build/master/profile
@@ -287,10 +292,12 @@ wget -qO package/base-files/files/etc/sysctl.conf https://raw.githubusercontent.
 #curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/profile > package/base-files/files/etc/profile
 #curl -fsSL  https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
-sed -i 's/option enabled.*/option enabled 1/' feeds/*/*/*/*/upnpd.config
+sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 sed -i "s/ImmortalWrt/OpenWrt/" {$config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
+echo "修改默认主题"
+#sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
 sed -i 's/bootstrap/opentopd/g' feeds/luci/collections/luci/Makefile
 #echo "other"
 
@@ -308,11 +315,8 @@ sed -i 's/option commit_interval 24h/option commit_interval 4h/g' feeds/packages
 sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
 git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./package/diy/luci-app-unblockneteasemusic
 sed -i 's/解除网易云音乐播放限制/解锁灰色歌曲/g' ./package/diy/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
-echo "修改默认主题"
-sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
 
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
-rm -rf feeds/*/*/{luci-app-appfilter,open-app-filter}
     # https://github.com/kiddin9/openwrt-bypass
     # https://github.com/fw876/helloworld
     # https://github.com/sirpdboy/sirpdboy-package/
