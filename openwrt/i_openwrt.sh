@@ -138,15 +138,22 @@ status
 case "$TARGET_DEVICE" in
     "x86_64")
         cat >.config<<-EOF
+        # CONFIG_TARGET_ROOTFS_INITRAMFS is not set
+        # CONFIG_TARGET_ROOTFS_CPIOGZ is not set
+        CONFIG_TARGET_ROOTFS_SQUASHFS=y
         CONFIG_TARGET_x86=y
         CONFIG_TARGET_x86_64=y
         CONFIG_TARGET_KERNEL_PARTSIZE=64
         CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
         CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
+        CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
+        CONFIG_TARGET_UBIFS_JOURNAL_SIZE=""
         CONFIG_GRUB_IMAGES=y
         CONFIG_GRUB_EFI_IMAGES=y
         # CONFIG_VMDK_IMAGES is not set
         # CONFIG_GRUB_CONSOLE is not set
+        # CONFIG_ISO_IMAGES is not set
+        # CONFIG_VDI_IMAGES is not set
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
@@ -250,7 +257,6 @@ esac
     CONFIG_PACKAGE_patch=y
     CONFIG_PACKAGE_diffutils=y
     CONFIG_PACKAGE_default-settings=y
-    CONFIG_TARGET_IMAGES_GZIP=y
     CONFIG_PACKAGE_autocore-x86=y
     CONFIG_PACKAGE_luci-theme-opentopd=y
     CONFIG_BRCMFMAC_SDIO=y
