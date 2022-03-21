@@ -341,7 +341,6 @@ clone_url "
     https://github.com/destan19/OpenAppFilter
     https://github.com/ntlf9t/luci-app-easymesh
     https://github.com/zzsj0928/luci-app-pushbot
-    https://github.com/small-5/luci-app-adblock-plus
     https://github.com/jerrykuku/luci-app-jd-dailybonus
     https://github.com/coolsnowwolf/packages/trunk/libs/qtbase
     https://github.com/coolsnowwolf/packages/trunk/libs/qttools
@@ -732,11 +731,11 @@ sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' 
 #version
 date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
    
-sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-'$KERNEL_VER'-'${VERSION}'-/g" include/image.mk
+sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-${KERNEL_VER}-${VERSION}-/g" include/image.mk
 
 echo "set=---------date1:${date1}--KERNEL_VER:${KERNEL_VER}--VERSION:$VERSION------------------"
-echo "DISTRIB_REVISION='${date1}' by Sirpdboy"
-echo "DISTRIB_REVISION='${date1}' by Sirpdboy" > ./package/base-files/files/etc/openwrt_release1
+echo "DISTRIB_REVISION='${date1} by Sirpdboy'"
+echo "DISTRIB_REVISION='${date1} by Sirpdboy' " > ./package/base-files/files/etc/openwrt_release1
 echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 chmod +x ./package/*/root/etc/init.d/*  
