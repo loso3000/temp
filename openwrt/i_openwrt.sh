@@ -203,7 +203,6 @@ EOF
 EOF
     ;;
 esac
-
     cat >>.config<<-EOF
     CONFIG_KERNEL_BUILD_USER="win3gp"
     CONFIG_KERNEL_BUILD_DOMAIN="OpenWrt"
@@ -212,7 +211,6 @@ esac
     CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
     ## luci app
     CONFIG_PACKAGE_miniupnpd-igdv1=y
-    CONFIG_PACKAGE_autosamba-samba4=y
     CONFIG_PACKAGE_luci-app-arpbind=y
     CONFIG_PACKAGE_luci-app-upnp=y
     CONFIG_PACKAGE_luci-app-ddns=y
@@ -222,19 +220,9 @@ esac
     CONFIG_PACKAGE_luci-app-control-weburl=y
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-timecontrol=y
-    CONFIG_PACKAGE_luci-app-webadmin=y
-    CONFIG_PACKAGE_luci-app-bypass=y
-    CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Kcptun=y
-    CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Simple_obfs_server=y
     CONFIG_PACKAGE_luci-app-zerotier=y
-    CONFIG_PACKAGE_luci-app-unblockneteasemusic=y
     CONFIG_DEFAULT_luci-app-cpufreq=y
     CONFIG_PACKAGE_luci-app-vlmcsd=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Plugin=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=n
@@ -246,13 +234,13 @@ esac
     ## remove
     # CONFIG_TARGET_IMAGES_GZIP is not set
     # CONFIG_PACKAGE_autosamba is not set
-     # CONFIG_PACKAGE_luci-app-autoreboot is not set
-     # CONFIG_PACKAGE_luci-app-filetransfer is not set
-     # CONFIG_PACKAGE_luci-app-wol is not set
-     # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
-     # CONFIG_PACKAGE_luci-app-accesscontrol is not set
-     # CONFIG_PACKAGE_luci-app-samba is not set
-     # CONFIG_PACKAGE_luci-app-unblockmusic is not set
+    # CONFIG_PACKAGE_luci-app-autoreboot is not set
+    # CONFIG_PACKAGE_luci-app-filetransfer is not set
+    # CONFIG_PACKAGE_luci-app-wol is not set
+    # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
+    # CONFIG_PACKAGE_luci-app-accesscontrol is not set
+    # CONFIG_PACKAGE_luci-app-samba is not set
+    # CONFIG_PACKAGE_luci-app-unblockmusic is not set
     # CONFIG_PACKAGE_default-settings-chn is not set
     ## Libraries
     CONFIG_PACKAGE_block-mount=y
@@ -267,9 +255,7 @@ esac
     CONFIG_PACKAGE_luci-theme-opentopd=y
     CONFIG_BRCMFMAC_SDIO=y
     CONFIG_LUCI_LANG_en=y
-    # CONFIG_LUCI_LANG_zh-cn=y
     CONFIG_LUCI_LANG_zh_Hans=y
-    CONFIG_DEFAULT_SETTINGS_OPTIMIZE_FOR_CHINESE=y
 EOF
 
 config_generate="package/base-files/files/bin/config_generate"
@@ -324,8 +310,7 @@ clone_url "
     https://github.com/immortalwrt/luci-app-unblockneteasemusic.git
     https://github.com/kiddin9/luci-app-dnsfilter
     https://github.com/jerrykuku/luci-app-vssr
-    https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall
-    # https://github.com/sirpdboy/build/trunk/pass/luci-app-ssr-plus
+    https://github.com/QiuSimons/openwrt-mos
     https://github.com/sirpdboy/luci-theme-opentopd.git
     https://github.com/jerrykuku/luci-theme-argon.git
     https://github.com/kiddin9/luci-theme-edge.git
@@ -339,7 +324,6 @@ clone_url "
     https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent
     https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic
     https://github.com/coolsnowwolf/packages/trunk/utils/btrfs-progs
-    #https://github.com/coolsnowwolf/packages/trunk/libs/rblibtorrent
     https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent-static
     https://github.com/vernesong/OpenClash/trunk/luci-app-openclash #bash
     https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
@@ -385,6 +369,8 @@ sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vss
     luci-app-dnsfilter
     luci-app-samba4
     luci-app-netspeedtest
+    luci-app-webadmin
+    luci-app-unblockneteasemusic
     "
     trv=`awk -F= '/PKG_VERSION:/{print $2}' feeds/packages/net/transmission/Makefile`
     wget -qO feeds/packages/net/transmission/patches/tr$trv.patch raw.githubusercontent.com/hong0980/diy/master/files/transmission/tr$trv.patch
@@ -446,6 +432,9 @@ case "$TARGET_DEVICE" in
     luci-app-openclash
     luci-app-socat
     luci-app-samba4
+    luci-app-netspeedtest
+    luci-app-webadmin
+    luci-app-unblockneteasemusic
     luci-app-dnsfilter
     luci-app-dockerman
     luci-app-netdata
@@ -523,7 +512,6 @@ case "$TARGET_DEVICE" in
     DEVICE_NAME="x86_64"
     FIRMWARE_TYPE="squashfs-combined"
     _packages "
-    luci-app-vlmcsd
     luci-theme-argon
     luci-theme-edge
     #USB3.0支持
@@ -562,11 +550,13 @@ case "$TARGET_DEVICE" in
     luci-app-openclash
     luci-app-socat
     luci-app-samba4
+    luci-app-netspeedtest
+    luci-app-webadmin
+    luci-app-unblockneteasemusic
     luci-app-pushbot
     luci-app-ikoolproxy
     luci-app-ttyd
     luci-app-turboacc
-    luci-app-unblockneteasemusic
     luci-app-mwan3
     luci-app-syncdial
     luci-app-passwall_INCLUDE_Brook
@@ -625,6 +615,7 @@ case "$TARGET_DEVICE" in
     luci-app-linkease
     luci-app-tencentddns
     luci-app-cifs-mount
+    luci-app-netspeedtest
     luci-app-unblockneteasemusic
     luci-app-mwan3
     luci-app-syncdial
