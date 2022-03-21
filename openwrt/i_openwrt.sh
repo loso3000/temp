@@ -34,7 +34,7 @@ wget -qO- $OPENCLASH_MAIN_URL | tar xOvz > files/etc/openclash/core/clash
 # wget -qO- $OFFICAL_OPENCLASH_MAIN_URL | gunzip -c > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
 wget -qO- $CLASH_GAME_URL | tar xOvz > files/etc/openclash/core/clash_game
-echo -e "$(color cy 'clash-$1 内核下载成功！....')\c"
+echo -e "$(color cy 'clash-${$1} 内核下载成功！....')\c"
 chmod +x files/etc/openclash/core/clash*
 }
 
