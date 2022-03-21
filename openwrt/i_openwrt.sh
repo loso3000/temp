@@ -3,7 +3,7 @@
 
 [[ x$REPO_FLODER = x ]] && \
 (REPO_FLODER="openwrt" && echo "REPO_FLODER=openwrt" >>$GITHUB_ENV)
-[[ $TARGET_DEVICE = phicomm_k2p ]] &&  VERSION=super
+[[ $TARGET_DEVICE = "phicomm_k2p" ]] &&  VERSION="super"
 KERNEL_VER="5.4"
 color() {
     case $1 in
@@ -34,7 +34,7 @@ wget -qO- $OPENCLASH_MAIN_URL | tar xOvz > files/etc/openclash/core/clash
 # wget -qO- $OFFICAL_OPENCLASH_MAIN_URL | gunzip -c > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
 wget -qO- $CLASH_GAME_URL | tar xOvz > files/etc/openclash/core/clash_game
-echo -e "$(color cy 'clash-${$1} 内核下载成功！....')\c"
+echo -e "$(color cy 'clash-'{$1}' 内核下载成功！....')\c"
 chmod +x files/etc/openclash/core/clash*
 }
 
@@ -261,6 +261,7 @@ esac
     CONFIG_BRCMFMAC_SDIO=y
     CONFIG_LUCI_LANG_en=y
     CONFIG_LUCI_LANG_zh_Hans=y
+    CONFIG_TESTING_KERNEL=y
 EOF
 
 config_generate="package/base-files/files/bin/config_generate"
@@ -373,7 +374,7 @@ EOF
 
 sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vssr/root/etc/config/vssr
 
-[[ $TARGET_DEVICE = phicomm_k2p || $VERSION = super ]] || {
+[[ $TARGET_DEVICE = "phicomm_k2p" || $VERSION = "super" ]] || {
     _packages "
     automount autosamba-samba4 axel kmod-rt2500-usb kmod-rtl8187
     luci-app-aria2
@@ -537,6 +538,28 @@ case "$TARGET_DEVICE" in
     _packages "
     luci-theme-argon
     luci-theme-edge
+    luci-app-bypass
+    luci-app-passwall
+    luci-app-openclash
+    luci-app-netspeedtest
+    luci-app-passwall_INCLUDE_Brook
+    luci-app-passwall_INCLUDE_ChinaDNS_NG
+    luci-app-passwall_INCLUDE_Haproxy
+    luci-app-passwall_INCLUDE_Hysteria
+    luci-app-passwall_INCLUDE_Kcptun
+    luci-app-passwall_INCLUDE_NaiveProxy
+    luci-app-passwall_INCLUDE_PDNSD
+    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client
+    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server
+    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client
+    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server
+    luci-app-passwall_INCLUDE_Simple_Obfs
+    luci-app-passwall_INCLUDE_Trojan_Plus
+    luci-app-passwall_INCLUDE_V2ray
+    luci-app-passwall_INCLUDE_Xray
+    luci-app-samba4
+    luci-app-webadmin
+    luci-app-socat
     #USB3.0支持
     kmod-usb2 kmod-usb2-pci kmod-usb3
     kmod-fs-nfsd kmod-fs-nfs kmod-fs-nfs-v4
@@ -554,11 +577,11 @@ case "$TARGET_DEVICE" in
     ath10k-firmware-qca988x ath10k-firmware-qca9984
     brcmfmac-firmware-43602a1-pcie irqbalance wget kmod-ntfs-3g
     kmod-alx kmod-ath10k kmod-bonding kmod-drm-ttm
-    kmod-igbvf kmod-iwlwifi kmod-ixgbevf e2fsprogs wget
+    kmod-igbvf kmod-iwlwifi kmod-ixgbevf e2fsprogs wget htop
     kmod-mmc-spi kmod-r8168 kmod-rtl8xxxu kmod-sdhci ppp-mod-pptp xl2tpd uqmi
     kmod-tg3 lm-sensors-detect snmpd kmod-vmxnet3 f2fs-tools f2fsck resize2fs
     "
-    [[  $VERSION = mini || $VERSION = dz ]] && {
+    [[  $VERSION = "mini" || $VERSION = "dz" ]] && {
     _packages "
     luci-app-adguardhome
     luci-app-smartdns
@@ -568,13 +591,6 @@ case "$TARGET_DEVICE" in
     luci-app-adguardhome_INCLUDE_binary
     luci-app-vssr
     luci-app-ssr-plus
-    luci-app-bypass
-    luci-app-passwall
-    luci-app-openclash
-    luci-app-socat
-    luci-app-samba4
-    luci-app-netspeedtest
-    luci-app-webadmin
     luci-app-unblockneteasemusic
     luci-app-pushbot
     luci-app-ikoolproxy
@@ -582,27 +598,12 @@ case "$TARGET_DEVICE" in
     luci-app-turboacc
     luci-app-mwan3
     luci-app-syncdial
-    luci-app-passwall_INCLUDE_Brook
-    luci-app-passwall_INCLUDE_ChinaDNS_NG
-    luci-app-passwall_INCLUDE_Haproxy
-    luci-app-passwall_INCLUDE_Hysteria
-    luci-app-passwall_INCLUDE_Kcptun
-    luci-app-passwall_INCLUDE_NaiveProxy
-    luci-app-passwall_INCLUDE_PDNSD
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server
-    luci-app-passwall_INCLUDE_Simple_Obfs
-    luci-app-passwall_INCLUDE_Trojan_Plus
-    luci-app-passwall_INCLUDE_V2ray
-    luci-app-passwall_INCLUDE_Xray
     kmod-usb-printer kmod-lp tree usbutils tmate gotop usb-modeswitch kmod-usb-serial-wwan kmod-usb-serial-option kmod-usb-serial
-    #AmuleWebUI-Reloaded htop lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
+    #AmuleWebUI-Reloaded lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
     #subversion-server #unixodbc #git-http
     "
     }
-    [[  $VERSION = plus ]] && {
+    [[  $VERSION = "plus" ]] && {
     _packages "
     luci-app-adguardhome
     luci-app-adguardhome_INCLUDE_binary
@@ -617,11 +618,6 @@ case "$TARGET_DEVICE" in
     luci-app-wrtbwmon
     luci-app-vssr
     luci-app-ssr-plus
-    luci-app-bypass
-    luci-app-passwall
-    luci-app-openclash
-    luci-app-socat
-    luci-app-samba4
     luci-app-ikoolproxy
     luci-app-v2raya
     luci-app-cifs-mount
@@ -635,10 +631,10 @@ case "$TARGET_DEVICE" in
     luci-app-uhttpd
     luci-app-vsftpd
     luci-app-mosdns
+    luci-app-koolddns
     luci-app-linkease
     luci-app-tencentddns
     luci-app-cifs-mount
-    luci-app-netspeedtest
     luci-app-unblockneteasemusic
     luci-app-mwan3
     luci-app-syncdial
@@ -658,29 +654,13 @@ case "$TARGET_DEVICE" in
     luci-app-nfs
     luci-app-aria2
     luci-app-openvpn-server
-    luci-app-deluge
     luci-app-aliyundrive-webdav
-    luci-app-passwall_INCLUDE_Brook
-    luci-app-passwall_INCLUDE_ChinaDNS_NG
-    luci-app-passwall_INCLUDE_Haproxy
-    luci-app-passwall_INCLUDE_Hysteria
-    luci-app-passwall_INCLUDE_Kcptun
-    luci-app-passwall_INCLUDE_NaiveProxy
-    luci-app-passwall_INCLUDE_PDNSD
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server
-    luci-app-passwall_INCLUDE_Simple_Obfs
-    luci-app-passwall_INCLUDE_Trojan_Plus
-    luci-app-passwall_INCLUDE_V2ray
-    luci-app-passwall_INCLUDE_Xray
     kmod-usb-printer kmod-lp tree usbutils tmate gotop usb-modeswitch kmod-usb-serial-wwan kmod-usb-serial-option kmod-usb-serial 
     #AmuleWebUI-Reloaded htop lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
     #subversion-server #unixodbc #git-http
     "
     }
-    [[  $VERSION = dz ]] && {
+    [[  $VERSION = "dz" ]] && {
     _packages "
     luci-app-uugamebooster
     luci-app-linkease
@@ -697,10 +677,9 @@ case "$TARGET_DEVICE" in
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
     clashcore amd64
 
-        KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
+     KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
     ;;
 "armvirt_64_Default")
-
         KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f 2)"
     DEVICE_NAME="armvirt-64-default"
     FIRMWARE_TYPE="armvirt-64-default-rootfs"
@@ -768,21 +747,22 @@ case "$VERSION" in
     
 case "$KERNEL_VER" in
     "5.4")
-       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.4-${VERSION}-/g' include/image.mk
+       sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.4-'${VERSION}'-/g" include/image.mk
        ;;
     "5.10")
 
-            sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.10-${VERSION}-/g' include/image.mk
+            sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.10-'${VERSION}'-/g" include/image.mk
         ;;
     "5.15")
-        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.15-${VERSION}-/g' include/image.mk
+        sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-5.15-'${VERSION}'-/g" include/image.mk
         ;;
     "*")
-        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-${VERSION}-/g' include/image.mk
+        sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-'${VERSION}'-/g" include/image.mk
         ;;
     esac 
-
-echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
+echo "set=---------date1:'${date1}'--KERNEL_VER: '{$KERNEL_VER}'--VERSION: '$VERSION'------------------"
+echo "DISTRIB_REVISION='${date1}' by Sirpdboy"
+echo "DISTRIB_REVISION='${date1}' by Sirpdboy" > ./package/base-files/files/etc/openwrt_release1
 echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 chmod +x ./package/*/root/etc/init.d/*  
