@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-# set -x
-
-
-echo "--------------------start-----------------"
+#!/usr/bin/
 
 WORKDIR=/workdir
 HOSTNAME=OpenWrt
