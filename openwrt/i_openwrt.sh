@@ -228,7 +228,6 @@ esac
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-timecontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
-    CONFIG_DEFAULT_luci-app-cpufreq=y
     CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
@@ -267,12 +266,26 @@ EOF
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
 
+git clone https://github.com/sirpdboy/build.git ./package/build
+git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
+rm -rf  package/emortal/autocore
+rm -rf  package/emortal/autosamba
+rm -rf  package/emortal/default-settings
+rm -rf ./feeds/packages/net/smartdns
+rm -rf ./feeds/luci/applications/luci-app-netdata
+rm -rf ./feeds/packages/admin/netdata
+rm -rf ./feeds/luci/applications/luci-app-dockerman
+rm -rf ./feeds/luci/applications/luci-app-samba4
+rm -rf ./feeds/luci/applications/luci-app-unblockneteasemusic
+rm -rf ./feeds/luci/applications/luci-app-accesscontrol
 sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
-    
-# wget -qO package/base-files/files/etc/banner git.io/JoNK8
-# sed -i "/DISTRIB_DESCRIPTION/ {s/'$/-immortalwrt-$(date +%Y年%m月%d日)'/}" package/*/*/*/openwrt_release
-# sed -i "/IMG_PREFIX:/ {s/=/=Immortal-\$(shell date +%m%d-%H%M -d +8hour)-/}" include/image.mk
 
+wget -qO package/base-files/files/etc/banner https://raw.githubusercontent.com/sirpdboy/build/master/banner
+wget -qO package/base-files/files/etc/profile https://raw.githubusercontent.com/sirpdboy/build/master/profile
+wget -qO package/base-files/files/etc/sysctl.conf https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf
+#curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/banner > ./package/base-files/files/etc/banner
+#curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/profile > package/base-files/files/etc/profile
+#curl -fsSL  https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
 
 sed -i 's/option enabled.*/option enabled 1/' feeds/*/*/*/*/upnpd.config
 sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
@@ -280,12 +293,8 @@ sed -i "s/ImmortalWrt/OpenWrt/" {$config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
 sed -i 's/bootstrap/opentopd/g' feeds/luci/collections/luci/Makefile
 #echo "other"
-sed -i 's/option commit_interval 24h/option commit_interval 4h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为2
-sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
-curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/banner > ./package/base-files/files/etc/banner
-curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/profile > package/base-files/files/etc/profile
-curl -fsSL  https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
-sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
+
+# sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 sed -i 's/16384/165535/g' ./package/kernel/linux/files/sysctl-nf-conntrack.conf
 #koolproxy
 git clone https://github.com/iwrt/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
@@ -295,15 +304,19 @@ echo "poweroff"
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/poweroff/poweroff.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/poweroff.htm 
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/poweroff/system.lua > ./feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
 
+sed -i 's/option commit_interval 24h/option commit_interval 4h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为2
+sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
+git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./package/diy/luci-app-unblockneteasemusic
+sed -i 's/解除网易云音乐播放限制/解锁灰色歌曲/g' ./package/diy/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
+echo "修改默认主题"
+sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
 
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
 rm -rf feeds/*/*/{luci-app-appfilter,open-app-filter}
-
-clone_url "
-    # https://github.com/fw876/helloworld
-    https://github.com/sirpdboy/build/
-    https://github.com/sirpdboy/sirpdboy-package/
     # https://github.com/kiddin9/openwrt-bypass
+    # https://github.com/fw876/helloworld
+    # https://github.com/sirpdboy/sirpdboy-package/
+clone_url "
     https://github.com/xiaorouji/openwrt-passwall
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
@@ -313,7 +326,6 @@ clone_url "
     https://github.com/rufengsuixing/luci-app-syncdial.git 
     https://github.com/tindy2013/openwrt-subconverter
     https://github.com/zxlhhyccc/luci-app-v2raya.git
-    https://github.com/immortalwrt/luci-app-unblockneteasemusic.git
     https://github.com/kiddin9/luci-app-dnsfilter
     https://github.com/jerrykuku/luci-app-vssr
     https://github.com/QiuSimons/openwrt-mos
@@ -333,7 +345,6 @@ clone_url "
     https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent-static
     https://github.com/vernesong/OpenClash/trunk/luci-app-openclash #bash
     https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
-    https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-adbyby-plus
 "
 # https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-ttyd ## 分支
 echo -e 'pthome.net\nchdbits.co\nhdsky.me\nwww.nicept.net\nourbits.club' | \
