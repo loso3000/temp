@@ -68,7 +68,6 @@ jobs:
 
     - name: 运行自定义
       run: |
-          #curl -fsSL git.io/J6IXO | /bin/bash
           curl -fsSL https://raw.githubusercontent.com/loso3000/temp/master/openwrt/l_openwrt.sh| /bin/bash
     - name: 下载软件包
       run: |
