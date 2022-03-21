@@ -40,7 +40,7 @@ env:
 
 jobs:
   immo-openwrt:
-    name: immortalwrt-${{ github.event.inputs.target }}
+    name: immortalwrt-${{ github.event.inputs.target }}-${{ github.event.inputs.version }}
     runs-on: ubuntu-20.04
     continue-on-error: true
 
