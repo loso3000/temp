@@ -652,7 +652,7 @@ case "$TARGET_DEVICE" in
     luci-app-aria2
     luci-app-openvpn-server
     luci-app-aliyundrive-webdav
-    kmod-usb-printer kmod-lp tree usbutils tmate gotop usb-modeswitch kmod-usb-serial-wwan kmod-usb-serial-option kmod-usb-serial 
+    kmod-usb-printer kmod-lp
     "
     }
     [[  $VERSION = "dz" ]] && {
@@ -730,18 +730,18 @@ case "$VERSION" in
 "mini")
    case "$KERNEL_VER" in
     "5.4")
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.4-/g' include/image.mk
+       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.4-/g' include/image.mk
        date1='Ipv6-Mini-5.4 S20220324'
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        ;;
     "5.10")
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.10-/g' include/image.mk
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.10-/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        date1='Ipv6-Mini-5.10 S20220324'
         ;;
     "5.15")
-        #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.15-/g' include/image.mk
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.15-/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         date1='Ipv6-Mini-5.15 S20220324'
         ;;
 
@@ -751,19 +751,19 @@ case "$VERSION" in
 "plus")
     case "$KERNEL_VER" in
     "5.4")
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.4-/g' include/image.mk
+        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.4-/g' include/image.mk
        date1='Ipv6-Plus-5.4 S20220324'
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        ;;
     "5.10")
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.10-/g' include/image.mk
+        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.10-/g' include/image.mk
        date1='Ipv6-Plus-5.10 S20220324'
-        sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
     "5.15")
-        #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.15-/g' include/image.mk
+        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.15-/g' include/image.mk
         date1='Ipv6-Plus-5.15 S20220324'
-        sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
 
     esac 
@@ -771,17 +771,18 @@ case "$VERSION" in
 "dz")
     case "$KERNEL_VER" in
     "5.4")
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.4-/g' include/image.mk
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.4-/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        date1='Ipv6-Dz-5.4 S20220324'
        ;;
     "5.10")
-       date1='Ipv6-Dz-5.10 S20220324'
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       date1='Ipv6-Dz-5.10 S20220324' 
+       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.10-/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
     "5.15")
-        #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.15-/g' include/image.mk
-        sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.15-/g' include/image.mk
+        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         date1='Ipv6-Dz-5.15 S20220324'
         ;;
 
@@ -790,24 +791,24 @@ case "$VERSION" in
 "*")
     case "$KERNEL_VER" in
     "5.4")
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.4-/g' include/image.mk
+       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.4-/g' include/image.mk
        date1='Ipv6-Super-5.4 S20220324'
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        ;;
     "5.10")
        date1='Ipv6-Super-5.10 S20220324'
-       #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.10-/g' include/image.mk
-       sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+       sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.10-/g' include/image.mk
+       #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.10-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        ;;
     "5.15")
         sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.15-/g' include/image.mk
         date1='Ipv6-Super-5.15 S20220324'
-        sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.15-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
     "*")
-        #sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-/g' include/image.mk
+        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-/g' include/image.mk
         date1='Ipv6-Super S20220324'
-        sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
+        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
 
     esac 
