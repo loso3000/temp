@@ -728,13 +728,21 @@ sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasr
 sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP禁用IPV6问题
 sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' ./feeds/luci/modules/luci-base/po/zh-cn/base.po   #用户名密码
 
-#version
-date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-   
-sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-${KERNEL_VER}-${VERSION}-/g" include/image.mk
 
-echo "set=---------date1:${date1}--KERNEL_VER:${KERNEL_VER}--VERSION:$VERSION------------------"
+#date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
+#date1='Ipv6-${KERNEL_VER}-${VERSION} S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
+
+date1='Ipv6-${KERNEL_VER}-${VERSION} S20220324'
+sed -i '/DTS_DIR:=$(LINUX_DIR)/a\BUILD_DATE_PREFIX:='$(date1)'' ./include/image.mk
+sed -i 's/IMG_PREFIX:=/IMG_PREFIX:=$(BUILD_DATE_PREFIX)-/g' ./include/image.mk
+#version
+sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(BUILD_DATE_PREFIX)-/g" include/image.mk
+
+echo "---------date1:${date1}--KERNEL_VER:${KERNEL_VER}--VERSION:$VERSION------------------"
+
 echo "DISTRIB_REVISION='${date1} by Sirpdboy'"
+echo "BUILD_DATE=`awk -F'BUILD_DATE_PREFIX:' '{print $2}' ./include/image.mk`"
+echo $BUILD_DATE ---------------${date1}
 echo "DISTRIB_REVISION='${date1} by Sirpdboy' " > ./package/base-files/files/etc/openwrt_release1
 echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
