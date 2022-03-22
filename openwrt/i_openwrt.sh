@@ -333,7 +333,7 @@ clone_url "
     https://github.com/tindy2013/openwrt-subconverter
     https://github.com/zxlhhyccc/luci-app-v2raya.git
     https://github.com/kiddin9/luci-app-dnsfilter
-    https://github.com/jerrykuku/luci-app-vssr
+    https://github.com/jerrykuku/luci-app-vssr.git
     https://github.com/QiuSimons/openwrt-mos
     https://github.com/sirpdboy/luci-theme-opentopd.git
     https://github.com/jerrykuku/luci-theme-argon.git
@@ -598,8 +598,6 @@ case "$TARGET_DEVICE" in
     luci-app-mwan3
     luci-app-syncdial
     kmod-usb-printer kmod-lp tree usbutils tmate gotop usb-modeswitch kmod-usb-serial-wwan kmod-usb-serial-option kmod-usb-serial
-    #AmuleWebUI-Reloaded lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
-    #subversion-server #unixodbc #git-http
     "
     }
     [[  $VERSION = "plus" ]] && {
@@ -655,8 +653,6 @@ case "$TARGET_DEVICE" in
     luci-app-openvpn-server
     luci-app-aliyundrive-webdav
     kmod-usb-printer kmod-lp tree usbutils tmate gotop usb-modeswitch kmod-usb-serial-wwan kmod-usb-serial-option kmod-usb-serial 
-    #AmuleWebUI-Reloaded htop lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
-    #subversion-server #unixodbc #git-http
     "
     }
     [[  $VERSION = "dz" ]] && {
@@ -699,8 +695,8 @@ case "$TARGET_DEVICE" in
     clashcore armv8
 
     sed -i "s/default 160/default $PARTSIZE/" config/Config-images.in
-    sed -i 's/@arm/@TARGET_armvirt_64/g' $(find package/A/ feeds/ -type d -name "luci-app-cpufreq")/Makefile
-    sed -e 's/services/system/; s/00//' $(find package/A/ feeds/ -type d -name "luci-app-cpufreq")/luasrc/controller/cpufreq.lua -i
+    # sed -i 's/@arm/@TARGET_armvirt_64/g' $(find package/A/ feeds/ -type d -name "luci-app-cpufreq")/Makefile
+    # sed -e 's/services/system/; s/00//' $(find package/A/ feeds/ -type d -name "luci-app-cpufreq")/luasrc/controller/cpufreq.lua -i
     }
     ;;
 esac
@@ -815,17 +811,9 @@ case "$VERSION" in
         ;;
 
     esac 
-        ;;
+  ;;
         
-    esac
-
-echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
-
-#sed -i '/DTS_DIR:=$(LINUX_DIR)/a\BUILD_DATE_PREFIX:='$(date1)'' ./include/image.mk
-#sed -i 's/IMG_PREFIX:=/IMG_PREFIX:=$(BUILD_DATE_PREFIX)-/g' ./include/image.mk
-#sed -i "s/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(BUILD_DATE_PREFIX)-/g" include/image.mk
-#echo "---------date1:${date1}--KERNEL_VER:${KERNEL_VER}--VERSION:$VERSION------------------"
-# echo "BUILD_DATE=`awk -F'BUILD_DATE_PREFIX:' '{print $2}' ./include/image.mk`"
+esac
 
 echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
 echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
