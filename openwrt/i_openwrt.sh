@@ -34,7 +34,7 @@ wget -qO- $OPENCLASH_MAIN_URL | tar xOvz > files/etc/openclash/core/clash
 # wget -qO- $OFFICAL_OPENCLASH_MAIN_URL | gunzip -c > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
 wget -qO- $CLASH_GAME_URL | tar xOvz > files/etc/openclash/core/clash_game
-echo -e "$(color cy 'clash-'{$1}' 内核下载成功！....')\c"
+echo -e "$(color cy 'clash-'$1' 内核下载成功！....')\c"
 chmod +x files/etc/openclash/core/clash*
 }
 
@@ -261,7 +261,7 @@ esac
     CONFIG_BRCMFMAC_SDIO=y
     CONFIG_LUCI_LANG_en=y
     CONFIG_LUCI_LANG_zh_Hans=y
-    CONFIG_TESTING_KERNEL=y
+    ##CONFIG_TESTING_KERNEL=y
 EOF
 
 config_generate="package/base-files/files/bin/config_generate"
@@ -842,6 +842,7 @@ status
 echo -e "$(color cy '更新配置....')\c"
 sed -i 's/^[ \t]*//g' ./.config
 make defconfig 1>/dev/null 2>&1
+cat .config
 status
 
 # echo "SSH_ACTIONS=true" >>$GITHUB_ENV #SSH后台
