@@ -732,7 +732,7 @@ sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' 
 #date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
 #date1='Ipv6-${KERNEL_VER}-${VERSION} S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
 
-date1='Ipv6-${KERNEL_VER}-${VERSION} S20220324'
+date1='Ipv6-'${KERNEL_VER}'-'${VERSION}' S20220324'
 sed -i '/DTS_DIR:=$(LINUX_DIR)/a\BUILD_DATE_PREFIX:='$(date1)'' ./include/image.mk
 sed -i 's/IMG_PREFIX:=/IMG_PREFIX:=$(BUILD_DATE_PREFIX)-/g' ./include/image.mk
 #version
