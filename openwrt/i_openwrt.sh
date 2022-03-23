@@ -472,7 +472,6 @@ case "$TARGET_DEVICE" in
     luci-app-usb-printer
     luci-app-pushbot
     luci-app-ikoolproxy
-    luci-app-v2raya
     luci-app-cifs-mount
     luci-app-uugamebooster
     luci-app-aliyundrive-webdav
@@ -515,6 +514,7 @@ case "$TARGET_DEVICE" in
     wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
         KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/armvirt/Makefile | cut -d = -f 2)"
+
     }
     ;;
 "phicomm_k2p")
@@ -618,7 +618,6 @@ case "$TARGET_DEVICE" in
     luci-app-vssr
     luci-app-ssr-plus
     luci-app-ikoolproxy
-    luci-app-v2raya
     luci-app-cifs-mount
     luci-app-uugamebooster
     luci-app-usb-printer
@@ -640,8 +639,8 @@ case "$TARGET_DEVICE" in
     luci-app-rclone
     luci-app-pppoe-server
     luci-app-ipsec-serve
-    luci-app-docker
-    luci-app-dockerman
+    #luci-app-docker
+    #luci-app-dockerman
     luci-app-softethervpn
     luci-app-udpxy
     luci-app-oaf
@@ -667,17 +666,18 @@ case "$TARGET_DEVICE" in
     "
     }
 
-    sed -i 's/qbittorrent_dynamic:qbittorrent/qbittorrent_dynamic:qBittorrent-Enhanced-Edition/g' package/feeds/luci/luci-app-qbittorrent/Makefile
-    sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
-    wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
-    wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
+    # sed -i 's/qbittorrent_dynamic:qbittorrent/qbittorrent_dynamic:qBittorrent-Enhanced-Edition/g' package/feeds/luci/luci-app-qbittorrent/Makefile
+    # sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
+    # wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
+    # wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
     clashcore amd64
 
-     KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
+     KERNEL_VER=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2`
     ;;
 "armvirt_64_Default")
-        KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f 2)"
+        KERNEL_VER=`grep "KERNEL_PATCHVER:="  target/linux/rockchip/Makefile | cut -d = -f 2`
+
     DEVICE_NAME="armvirt-64-default"
     FIRMWARE_TYPE="armvirt-64-default-rootfs"
     sed -i '/easymesh/d' .config
@@ -689,7 +689,7 @@ case "$TARGET_DEVICE" in
     kmod-usb-net-asix-ax88179 kmod-usb-net-rtl8150 kmod-usb-net-rtl8152 kmod-usb-storage
     kmod-usb-storage-extras kmod-usb-storage-uas kmod-usb2 kmod-usb3 lm-sensors losetup
     lsattr lsblk lscpu lsscsi luci-app-adguardhome luci-app-cpufreq luci-app-dockerman
-    luci-app-qbittorrent mkf2fs ntfs-3g parted pv python3 resize2fs tune2fs unzip
+    mkf2fs ntfs-3g parted pv python3 resize2fs tune2fs unzip
     uuidgen wpa-cli wpad wpad-basic xfs-fsck xfs-mkfs bsdtar pigz gawk perl perl-http-date
     perlbase-getopt perlbase-time perlbase-unicode perlbase-utf8 luci-app-amlogic"
     echo "CONFIG_PERL_NOCOMMENT=y" >>.config
@@ -808,14 +808,14 @@ case "$VERSION" in
         date1='Ipv6-Super S20220324'
         #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
+
+    esac 
+  ;;
     "*")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.4-/g' include/image.mk
        date1='Ipv6-Super-5.4 S20220324'
        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
-       ;;
-    esac 
-  ;;
-        
+       ;;   
 esac
 
 echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
