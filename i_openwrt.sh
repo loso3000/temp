@@ -807,11 +807,11 @@ chmod +x ./package/*/*/*/root/etc/init.d/*
 chmod +x ./package/*/*/*/root/usr/*/*
 status
 
-echo -e "$(color cy '更新配置....')\c"
+#echo -e "$(color cy '更新配置....')\c"
 sed -i 's/^[ \t]*//g' ./.config
-make defconfig 1>/dev/null 2>&1
-cat .config
-status
+# make defconfig 1>/dev/null 2>&1
+# cat .config
+# status
 
 # echo "SSH_ACTIONS=true" >>$GITHUB_ENV #SSH后台
 # echo "UPLOAD_PACKAGES=false" >>$GITHUB_ENV
