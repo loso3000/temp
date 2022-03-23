@@ -605,7 +605,6 @@ case "$TARGET_DEVICE" in
     luci-app-adguardhome
     luci-app-adguardhome_INCLUDE_binary
     luci-app-dockerman
-    luci-app-qbittorrent
     luci-app-smartdns
     luci-app-control-timewol
     luci-app-hd-idle
