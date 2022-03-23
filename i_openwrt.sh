@@ -34,7 +34,7 @@ wget -qO- $OPENCLASH_MAIN_URL | tar xOvz > files/etc/openclash/core/clash
 # wget -qO- $OFFICAL_OPENCLASH_MAIN_URL | gunzip -c > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
 wget -qO- $CLASH_GAME_URL | tar xOvz > files/etc/openclash/core/clash_game
-echo -e "$(color cy 'clash-'$1' 内核下载成功！....')\c"
+# echo -e "$(color cy 'clash-'$1' 内核下载成功！....')\c"
 chmod +x files/etc/openclash/core/clash*
 }
 
@@ -233,8 +233,8 @@ esac
     CONFIG_PACKAGE_openssh-sftp-server=y
     CONFIG_PACKAGE_automount=y
     CONFIG_PACKAGE_fdisk=y
-    CONFIG_PACKAGE_patch=y
-    CONFIG_PACKAGE_diffutils=y
+    #CONFIG_PACKAGE_patch=y
+    #CONFIG_PACKAGE_diffutils=y
     CONFIG_PACKAGE_default-settings=y
     CONFIG_PACKAGE_autocore-x86=y
     CONFIG_PACKAGE_luci-theme-opentopd=y
@@ -248,12 +248,12 @@ config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
 sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
-rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo}
+rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat}
 rm -rf package/*/{autocore,autosamba,default-settings}
 rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier,luci-app-wrtbwmon,luci-app-koolddns}
 
-git clone https://github.com/sirpdboy/build.git ./package/build
-git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
+git clone https://github.com/sirpdboy/build.git ./package/build   2>/dev/null
+git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy   2>/dev/null
 rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
@@ -268,9 +268,9 @@ rm -rf ./feeds/luci/applications/luci-app-wol
 rm -rf ./feeds/luci/applications/luci-app-unblockneteasemusic
 rm -rf ./feeds/luci/applications/luci-app-accesscontrol
 
-wget -qO package/base-files/files/etc/banner https://raw.githubusercontent.com/sirpdboy/build/master/banner
-wget -qO package/base-files/files/etc/profile https://raw.githubusercontent.com/sirpdboy/build/master/profile
-wget -qO package/base-files/files/etc/sysctl.conf https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf
+wget -qO package/base-files/files/etc/banner https://raw.githubusercontent.com/sirpdboy/build/master/banner   2>/dev/null
+wget -qO package/base-files/files/etc/profile https://raw.githubusercontent.com/sirpdboy/build/master/profile    2>/dev/null
+wget -qO package/base-files/files/etc/sysctl.conf https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf    2>/dev/null
 #curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/banner > ./package/base-files/files/etc/banner
 #curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/profile > package/base-files/files/etc/profile
 #curl -fsSL  https://raw.githubusercontent.com/sirpdboy/sirpdboy-package/master/set/sysctl.conf > ./package/base-files/files/etc/sysctl.conf
@@ -279,24 +279,20 @@ sed -i 's/option enabled.*/option enabled 0/' feeds/*/*/*/*/upnpd.config
 sed -i 's/option dports.*/option enabled 2/' feeds/*/*/*/*/upnpd.config
 sed -i "s/ImmortalWrt/OpenWrt/" {$config_generate,include/version.mk}
 sed -i "/listen_https/ {s/^/#/g}" package/*/*/*/files/uhttpd.config
-echo "修改默认主题"
+
 #sed -i 's/+luci-theme-bootstrap/+luci-theme-opentopd/g' feeds/luci/collections/luci/Makefile
 sed -i 's/bootstrap/opentopd/g' feeds/luci/collections/luci/Makefile
-#echo "other"
-
 # sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 sed -i 's/16384/165535/g' ./package/kernel/linux/files/sysctl-nf-conntrack.conf
-#koolproxy
-git clone https://github.com/iwrt/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
+git clone https://github.com/iwrt/luci-app-ikoolproxy.git package/luci-app-ikoolproxy   2>/dev/null
 sed -i 's,1).dep,11).dep,g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua 
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/build/master/mwan3/files/etc/config/mwan3   > ./feeds/packages/net/mwan3/files/etc/config/mwan3
-echo "poweroff"
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/poweroff/poweroff.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/poweroff.htm 
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/poweroff/system.lua > ./feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
 
 sed -i 's/option commit_interval 24h/option commit_interval 4h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为2
 sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
-git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./package/diy/luci-app-unblockneteasemusic
+git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./package/diy/luci-app-unblockneteasemusic   2>/dev/null
 
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
     # https://github.com/kiddin9/openwrt-bypass
@@ -449,7 +445,6 @@ case "$TARGET_DEVICE" in
     luci-app-usb-printer
     luci-app-pushbot
     luci-app-ikoolproxy
-    luci-app-v2raya
     luci-app-cifs-mount
     luci-app-uugamebooster
     luci-app-aliyundrive-webdav
@@ -487,11 +482,13 @@ case "$TARGET_DEVICE" in
     usb-modeswitch kmod-usb-net-rtl8152-vendor kmod-usb-printer 
     "
     # sed -i 's/qbittorrent_dynamic:qbittorrent/qbittorrent_dynamic:qBittorrent-Enhanced-Edition/g' package/feeds/luci/luci-app-qbittorrent/Makefile
-    sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
+    #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
     wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
-    wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
+    wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi  
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
-        KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/armvirt/Makefile | cut -d = -f 2)"
+        
+        KERNEL_VER=`grep "KERNEL_PATCHVER:="  target/linux/armvirt/Makefile | cut -d = -f 2`
+
     }
     ;;
 "phicomm_k2p")
@@ -536,6 +533,7 @@ case "$TARGET_DEVICE" in
     luci-app-passwall_INCLUDE_Trojan_Plus
     luci-app-passwall_INCLUDE_V2ray
     luci-app-passwall_INCLUDE_Xray
+    luci-app-unblockneteasemusic
     luci-app-samba4
     luci-app-webadmin
     luci-app-socat
@@ -584,7 +582,6 @@ case "$TARGET_DEVICE" in
     _packages "
     luci-app-adguardhome
     luci-app-adguardhome_INCLUDE_binary
-    luci-app-dockerman
     luci-app-smartdns
     luci-app-control-timewol
     luci-app-hd-idle
@@ -595,7 +592,7 @@ case "$TARGET_DEVICE" in
     luci-app-vssr
     luci-app-ssr-plus
     luci-app-ikoolproxy
-    luci-app-v2raya
+    #luci-app-v2raya
     luci-app-cifs-mount
     luci-app-uugamebooster
     luci-app-usb-printer
@@ -617,8 +614,8 @@ case "$TARGET_DEVICE" in
     luci-app-rclone
     luci-app-pppoe-server
     luci-app-ipsec-serve
-    luci-app-docker
-    luci-app-dockerman
+    #luci-app-docker
+    #luci-app-dockerman
     luci-app-softethervpn
     luci-app-udpxy
     luci-app-oaf
@@ -644,17 +641,15 @@ case "$TARGET_DEVICE" in
     "
     }
 
-    sed -i 's/qbittorrent_dynamic:qbittorrent/qbittorrent_dynamic:qBittorrent-Enhanced-Edition/g' package/feeds/luci/luci-app-qbittorrent/Makefile
-    sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
-    wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
-    wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
+    #sed -i 's/qbittorrent_dynamic:qbittorrent/qbittorrent_dynamic:qBittorrent-Enhanced-Edition/g' package/feeds/luci/luci-app-qbittorrent/Makefile
+    #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.4.1_v1.2.15/' $(find package/A/ feeds/ -type d -name "qBittorrent-static")/Makefile
+    #wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
+    #wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
     clashcore amd64
-
-     KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/x86/Makefile | cut -d = -f 2)"
+    KERNEL_VER=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2`
     ;;
 "armvirt_64_Default")
-        KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/rockchip/Makefile | cut -d = -f 2)"
     DEVICE_NAME="armvirt-64-default"
     FIRMWARE_TYPE="armvirt-64-default-rootfs"
     sed -i '/easymesh/d' .config
@@ -666,11 +661,12 @@ case "$TARGET_DEVICE" in
     kmod-usb-net-asix-ax88179 kmod-usb-net-rtl8150 kmod-usb-net-rtl8152 kmod-usb-storage
     kmod-usb-storage-extras kmod-usb-storage-uas kmod-usb2 kmod-usb3 lm-sensors losetup
     lsattr lsblk lscpu lsscsi luci-app-adguardhome luci-app-cpufreq luci-app-dockerman
-    luci-app-qbittorrent mkf2fs ntfs-3g parted pv python3 resize2fs tune2fs unzip
+    mkf2fs ntfs-3g parted pv python3 resize2fs tune2fs unzip
     uuidgen wpa-cli wpad wpad-basic xfs-fsck xfs-mkfs bsdtar pigz gawk perl perl-http-date
     perlbase-getopt perlbase-time perlbase-unicode perlbase-utf8 luci-app-amlogic"
     echo "CONFIG_PERL_NOCOMMENT=y" >>.config
-    
+    KERNEL_VER=`grep "KERNEL_PATCHVER:="  target/linux/rockchip/Makefile | cut -d = -f 2`
+        
     clashcore armv8
 
     sed -i "s/default 160/default $PARTSIZE/" config/Config-images.in
@@ -824,4 +820,4 @@ echo "CACHE_ACTIONS=true" >> $GITHUB_ENV
 echo "DEVICE_NAME=$DEVICE_NAME" >>$GITHUB_ENV
 echo "FIRMWARE_TYPE=$FIRMWARE_TYPE" >>$GITHUB_ENV
 echo "ARCH=`awk -F'"' '/^CONFIG_TARGET_ARCH_PACKAGES/{print $2}' .config`" >>$GITHUB_ENV
-echo -e "\e[1;35m脚本运行完成！\e[0m"
+# echo -e "\e[1;35m脚本运行完成！\e[0m"
