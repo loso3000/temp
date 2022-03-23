@@ -113,8 +113,10 @@ clone_url() {
     done
 }
 
-REPO_URL=https://github.com/immortalwrt/immortalwrt
-[[ $REPO_BRANCH ]] && cmd="-b $REPO_BRANCH" || cmd="-b openwrt-18.06-k5.4"
+#REPO_URL=https://github.com/immortalwrt/immortalwrt
+REPO_URL=https://github.com/coolsnowwolf/lede
+#[[ $REPO_BRANCH ]] && cmd="-b $REPO_BRANCH" || cmd="-b openwrt-18.06-k5.4"
+cmd="master"
 
 echo -e "$(color cy 当前的机型) $(color cb ${REPO_BRANCH}-${TARGET_DEVICE}-${VERSION})"
 echo -e "$(color cy '拉取源码....')\c"
@@ -322,8 +324,14 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/kiddin9/openwrt-bypass
     # https://github.com/fw876/helloworld
     # https://github.com/sirpdboy/sirpdboy-package/
+    # https://github.com/coolsnowwolf/packages/trunk/libs/qttools
+    # https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent
+    # https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent-static
+    # https://github.com/coolsnowwolf/packages/trunk/libs/qtbase
+    #  https://github.com/coolsnowwolf/packages/trunk/utils/btrfs-progs
 clone_url "
     https://github.com/loso3000/openwrt-passwall
+    https://github.com/jerrykuku/luci-app-vssr.git
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
@@ -333,7 +341,6 @@ clone_url "
     https://github.com/tindy2013/openwrt-subconverter
     https://github.com/zxlhhyccc/luci-app-v2raya.git
     https://github.com/kiddin9/luci-app-dnsfilter
-    https://github.com/jerrykuku/luci-app-vssr.git
     https://github.com/QiuSimons/openwrt-mos
     https://github.com/sirpdboy/luci-theme-opentopd.git
     https://github.com/jerrykuku/luci-theme-argon.git
@@ -342,13 +349,8 @@ clone_url "
     https://github.com/ntlf9t/luci-app-easymesh
     https://github.com/zzsj0928/luci-app-pushbot
     https://github.com/jerrykuku/luci-app-jd-dailybonus
-    https://github.com/coolsnowwolf/packages/trunk/libs/qtbase
-    https://github.com/coolsnowwolf/packages/trunk/libs/qttools
-    https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent
     https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic
-    https://github.com/coolsnowwolf/packages/trunk/utils/btrfs-progs
-    https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent-static
-    https://github.com/vernesong/OpenClash/trunk/luci-app-openclash #bash
+    https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
     https://github.com/lisaac/luci-lib-docker/trunk/collections/luci-lib-docker
 "
 # https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-ttyd ## 分支
