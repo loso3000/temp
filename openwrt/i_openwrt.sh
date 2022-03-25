@@ -112,17 +112,17 @@ clone_url() {
         fi
     done
 }
-
-# REPO_URL=https://github.com/immortalwrt/immortalwrt
-REPO_URL=https://github.com/coolsnowwolf/lede
-cmd="master"
+[[ $REPO_BRANCH ]] && cmd="-b $REPO_BRANCH" || cmd="-b openwrt-18.06-k5.4"
+REPO_URL=https://github.com/immortalwrt/immortalwrt
+# REPO_URL=https://github.com/coolsnowwolf/lede
+# cmd="master"
 
 echo -e "$(color cy 当前的机型) $(color cb ${REPO_BRANCH}-${TARGET_DEVICE}-${VERSION})"
 echo -e "$(color cy '拉取源码....')\c"
 BEGIN_TIME=$(date '+%H:%M:%S')
 
 git clone --depth 1 $REPO_URL -b $cmd  $REPO_FLODER
-# git clone -q $REPO_URL $cmd $REPO_FLODER
+git clone -q $REPO_URL $cmd $REPO_FLODER
 status
 
 cd $REPO_FLODER || exit
