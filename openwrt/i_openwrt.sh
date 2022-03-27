@@ -148,7 +148,7 @@ case "$TARGET_DEVICE" in
         CONFIG_TARGET_x86_64=y
         CONFIG_TARGET_KERNEL_PARTSIZE=64
         CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
-        # CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
+        CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
         CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
         # CONFIG_TARGET_ROOTFS_EXT4FS is not set
         CONFIG_TARGET_UBIFS_JOURNAL_SIZE=""
@@ -278,6 +278,7 @@ rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-a
 
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
+rm -rf  ./package/build/luci-app-netspeedtest
 rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
@@ -338,6 +339,7 @@ clone_url "
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
     https://github.com/linkease/nas-packages/trunk/network/services/linkease
+    https://github.com/sirpdboy/diy/trunk/luci-app-netspeedtest
     https://github.com/rufengsuixing/luci-app-zerotier.git
     https://github.com/rufengsuixing/luci-app-syncdial.git 
     https://github.com/tindy2013/openwrt-subconverter
@@ -466,6 +468,7 @@ case "$TARGET_DEVICE" in
     luci-app-dockerman
     luci-app-netdata
     luci-app-qbittorrent
+    luci-app-netspeedtest
     luci-app-smartdns
     luci-app-deluge
     luci-app-nlbwmon
@@ -591,7 +594,6 @@ case "$TARGET_DEVICE" in
     luci-app-diskman
     luci-app-nlbwmon
     luci-app-wrtbwmon
-    luci-app-adguardhome_INCLUDE_binary
     luci-app-vssr
     luci-app-ssr-plus
     luci-app-unblockneteasemusic
@@ -608,7 +610,6 @@ case "$TARGET_DEVICE" in
     [[  $VERSION = "plus" ]] && {
     _packages "
     luci-app-adguardhome
-    luci-app-adguardhome_INCLUDE_binary
     luci-app-dockerman
     luci-app-smartdns
     luci-app-control-timewol
