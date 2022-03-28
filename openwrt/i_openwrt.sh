@@ -220,6 +220,8 @@ esac
     CONFIG_GRUB_TIMEOUT="0"
     CONFIG_PACKAGE_ipv6helper=y
     CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
+    CONFIG_ALL_NONSHARED=y
+    
     ## luci app
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
@@ -253,6 +255,9 @@ esac
     # CONFIG_PACKAGE_luci-app-unblockmusic is not set
     # CONFIG_PACKAGE_default-settings-chn is not set
     ## Libraries
+    CONFIG_GRUB_TIMEOUT="0"
+    CONFIG_LINUX_5_10=y
+    CONFIG_TESTING_KERNEL=y
     CONFIG_PACKAGE_block-mount=y
     CONFIG_PACKAGE_openssh-sftp-server=y
     CONFIG_PACKAGE_automount=y
@@ -265,7 +270,6 @@ esac
     CONFIG_BRCMFMAC_SDIO=y
     CONFIG_LUCI_LANG_en=y
     CONFIG_LUCI_LANG_zh_Hans=y
-    ##CONFIG_TESTING_KERNEL=y
 EOF
 
 config_generate="package/base-files/files/bin/config_generate"
