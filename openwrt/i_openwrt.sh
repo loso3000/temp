@@ -759,6 +759,7 @@ case "$VERSION" in
         ;;
  
 esac
+echo "=date1=${date1}==   -----  =VERSION=$VERSION=="  
 
 echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
 echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
