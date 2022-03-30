@@ -1,4 +1,4 @@
-#!/usr/bin
+#!/usr/bin/env bash
 
 color() {
     case $1 in
