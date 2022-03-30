@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+config_generate="package/base-files/files/bin/config_generate"
+
 color() {
     case $1 in
         cy)
@@ -107,7 +109,6 @@ clone_url() {
         fi
     done
 }
-config_generate="package/base-files/files/bin/config_generate"
 
 # 清理
 rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-netdata,luci-app-wolplus,luci-app-arpbind,luci-app-baidupcs-web}
