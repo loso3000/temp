@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-# set -x
-
-[[ x$REPO_FLODER = x ]] && \
-(REPO_FLODER="openwrt" && echo "REPO_FLODER=openwrt" >>$GITHUB_ENV)
+#!/usr/bin
 
 color() {
     case $1 in
@@ -208,7 +204,6 @@ sed -i 's/),9)/),12)/g' package/A/luci-app-dnsfilter/luasrc/controller/dnsfilter
       TITLE:=Python $(PYTHON3_VERSION) UUID module
       DEPENDS:=+python3-light +libuuid
     endef
-
     $(eval $(call Py3BasePackage,python3-uuid, \
         /usr/lib/python$(PYTHON3_VERSION)/uuid.py \
         /usr/lib/python$(PYTHON3_VERSION)/lib-dynload/_uuid.$(PYTHON3_SO_SUFFIX) \
@@ -287,7 +282,7 @@ sed -i 's/a.default = "0"/a.default = "1"/g' ./feeds/luci/applications/luci-app-
 sed -i 's/invalid/# invalid/g' ./package/network/services/samba36/files/smb.conf.template  #共享问题
 sed -i '/mcsub_renew.datatype/d'  ./feeds/luci/applications/luci-app-udpxy/luasrc/model/cbi/udpxy.lua  #修复UDPXY设置延时55的错误
 sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP禁用IPV6问题
-sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' ./feeds/luci/modules/luci-base/po/zh-cn/base.po   #用户名密码
+sed -i 's/请输入用户名和密码。/管理登陆/g' ./feeds/luci/modules/luci-base/po/zh-cn/base.po   #用户名密码
 
 #version
 date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
@@ -328,11 +323,6 @@ chmod +x ./package/*/*/*/root/etc/init.d/*
 chmod +x ./package/*/*/*/root/usr/*/*
 status
 
-echo -e "$(color cy '更新配置....')\c"
-sed -i 's/^[ \t]*//g' ./.config
-make defconfig 1>/dev/null 2>&1
-cat .config
-status
 
 # echo "SSH_ACTIONS=true" >>$GITHUB_ENV #SSH后台
 # echo "UPLOAD_PACKAGES=false" >>$GITHUB_ENV
