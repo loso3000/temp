@@ -586,7 +586,7 @@ case "$TARGET_DEVICE" in
     acpid ath10k-firmware-qca9888 autosamba-samba4 kmod-igc
     ath10k-firmware-qca988x ath10k-firmware-qca9984
     brcmfmac-firmware-43602a1-pcie irqbalance wget kmod-ntfs-3g
-    kmod-alx kmod-ath10k kmod-bonding kmod-drm-ttm kmod-backlight
+    kmod-alx kmod-ath10k kmod-bonding
     kmod-igbvf kmod-iwlwifi kmod-ixgbevf e2fsprogs wget htop
     kmod-mmc-spi kmod-r8168 kmod-rtl8xxxu kmod-sdhci ppp-mod-pptp xl2tpd uqmi
     kmod-tg3 lm-sensors-detect snmpd kmod-vmxnet3 f2fs-tools f2fsck resize2fs
@@ -611,6 +611,7 @@ case "$TARGET_DEVICE" in
     kmod-usb-printer kmod-lp tree usbutils tmate gotop usb-modeswitch kmod-usb-serial-wwan kmod-usb-serial-option kmod-usb-serial
     "
     }
+    # kmod-drm-ttm kmod-backlight
     [[  $VERSION = "plus" ]] && {
     _packages "
     luci-app-adguardhome
