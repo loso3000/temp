@@ -161,6 +161,9 @@ case "$TARGET_DEVICE" in
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
+
+cat  ../configx/extra-drivers.config >>.config
+
     ;;
     "r4s"|"r2c"|"r2r")
         cat >.config<<-EOF
@@ -233,7 +236,7 @@ esac
     CONFIG_PACKAGE_luci-app-control-weburl=y
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-timecontrol=y
-    CONFIG_PACKAGE_luci-app-zerotier=y
+    CONFIG_PACKAGE_luci-app-zerotier=n
     CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
@@ -256,8 +259,8 @@ esac
     # CONFIG_PACKAGE_default-settings-chn is not set
     ## Libraries
     CONFIG_GRUB_TIMEOUT="0"
-    CONFIG_LINUX_5_10=y
-    CONFIG_TESTING_KERNEL=y
+    # CONFIG_LINUX_5_10=y
+    # CONFIG_TESTING_KERNEL=y
     CONFIG_PACKAGE_block-mount=y
     CONFIG_PACKAGE_openssh-sftp-server=y
     CONFIG_PACKAGE_automount=y
@@ -277,15 +280,18 @@ color cy "自定义设置.... "
 sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
 rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat}
-rm -rf package/*/{autocore,autosamba,default-settings}
+#rm -rf package/*/{autocore,autosamba,default-settings}
 rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier,luci-app-wrtbwmon,luci-app-koolddns}
 
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
 rm -rf  ./package/build/luci-app-netspeedtest
-rm -rf  package/emortal/autocore
-rm -rf  package/emortal/autosamba
+#rm -rf  package/emortal/autocore
+#rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
+rm ./package/build/autocore
+rm ./package/build/autosamba
+rm ./package/build/pass/luci-app-ssr-plus
 rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/packages/net/wrtbwmon
 rm -rf ./feeds/luci/applications/luci-app-netdata
@@ -330,6 +336,9 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
     # https://github.com/kiddin9/openwrt-bypass
     # https://github.com/fw876/helloworld
+    
+    #https://github.com/loso3000/openwrt-passwall
+    #https://github.com/jerrykuku/luci-app-vssr.git
     # https://github.com/sirpdboy/sirpdboy-package/
     # https://github.com/coolsnowwolf/packages/trunk/libs/qttools
     # https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent
@@ -337,8 +346,8 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/coolsnowwolf/packages/trunk/libs/qtbase
     #  https://github.com/coolsnowwolf/packages/trunk/utils/btrfs-progs
 clone_url "
-    https://github.com/loso3000/openwrt-passwall
-    https://github.com/jerrykuku/luci-app-vssr.git
+
+    https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
@@ -546,10 +555,13 @@ case "$TARGET_DEVICE" in
     DEVICE_NAME="x86_64"
     FIRMWARE_TYPE="squashfs-combined"
     _packages "
+    
+    luci-app-adguardhome
+    luci-app-ssr-plus
     luci-theme-argon
     luci-theme-edge
     luci-app-bypass
-    luci-app-passwall
+    #luci-app-passwall
     luci-app-openclash
     luci-app-netspeedtest
     luci-app-passwall_INCLUDE_Brook
@@ -578,7 +590,7 @@ case "$TARGET_DEVICE" in
     #USB_net_driver
     kmod-mt76 kmod-mt76x2u kmod-rtl8821cu kmod-rtl8192cu kmod-rtl8812au-ac
     kmod-usb-net-asix-ax88179 kmod-usb-net-cdc-ether kmod-usb-net-rndis
-    usb-modeswitch kmod-usb-net-rtl8152
+    #usb-modeswitch kmod-usb-net-rtl8152
     #docker
     kmod-dm kmod-dummy kmod-ikconfig kmod-veth
     kmod-nf-conntrack-netlink kmod-nf-ipvs
@@ -586,19 +598,19 @@ case "$TARGET_DEVICE" in
     acpid ath10k-firmware-qca9888 autosamba-samba4 kmod-igc
     ath10k-firmware-qca988x ath10k-firmware-qca9984
     brcmfmac-firmware-43602a1-pcie irqbalance wget kmod-ntfs-3g
-    kmod-alx kmod-ath10k kmod-bonding
+    kmod-alx kmod-ath10k kmod-bonding kmod-ath9k
     kmod-igbvf kmod-iwlwifi kmod-ixgbevf e2fsprogs wget htop
     kmod-mmc-spi kmod-r8168 kmod-rtl8xxxu kmod-sdhci ppp-mod-pptp xl2tpd uqmi
     kmod-tg3 lm-sensors-detect snmpd kmod-vmxnet3 f2fs-tools f2fsck resize2fs
     "
     [[  $VERSION = "mini" || $VERSION = "dz" ]] && {
     _packages "
-    luci-app-adguardhome
     luci-app-smartdns
     luci-app-diskman
     luci-app-nlbwmon
     luci-app-wrtbwmon
     luci-app-vssr
+    luci-app-adguardhome
     luci-app-ssr-plus
     luci-app-unblockneteasemusic
     luci-app-pushbot
