@@ -752,22 +752,22 @@ date1='Ipv6-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
 case "$VERSION" in
 "mini")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220401-Ipv6-Mini-5.4-/g' include/image.mk
-       date1='Ipv6-Mini-5.4 S20220401'
+       #date1='Ipv6-Mini-5.4 S20220401'
        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Mini-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
     ;;
 "plus")
         sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220401-Ipv6-Plus-5.4-/g' include/image.mk
-       date1='Ipv6-Plus-5.4 S20220401'
+       #date1='Ipv6-Plus-5.4 S20220401'
        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Plus-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
        ;;
 "dz")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220401-Ipv6-Dz-5.4-/g' include/image.mk
        #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Dz-5.4-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
-       date1='Ipv6-Dz-5.4 S20220401'
+       #date1='Ipv6-Dz-5.4 S20220401'
        ;;
 "*")
         sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220401-Ipv6-Super-/g' include/image.mk
-        date1='Ipv6-Super S20220401'
+        #date1='Ipv6-Super S20220401'
         #sed -i 's/IMG_PREFIX:=.*/$(shell TZ=UTC-8 date +%Y%m%d -d +12hour)-Ipv6-Super-$(BOARD)$(if $(SUBTARGET),-$(SUBTARGET))/g' include/image.mk
         ;;
  
