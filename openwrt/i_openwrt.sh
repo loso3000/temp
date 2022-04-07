@@ -748,7 +748,7 @@ sed -i '/filter_/d' ./package/network/services/dnsmasq/files/dhcp.conf   #DHCP�
 sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' ./feeds/luci/modules/luci-base/po/zh-cn/base.po   #用户名密码
 
 #version
-date1='Ipv6-Super S'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
+date1='Ipv6-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
 case "$VERSION" in
 "mini")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220401-Ipv6-Mini-5.4-/g' include/image.mk
@@ -774,8 +774,8 @@ case "$VERSION" in
 esac
 echo "=date1=${date1}==   -----  =VERSION=$VERSION=="  
 
-echo "DISTRIB_REVISION='${date1} by Sirpdboy'" > ./package/base-files/files/etc/openwrt_release1
-echo ${date1}' by Sirpdboy ' >> ./package/base-files/files/etc/banner
+echo "DISTRIB_REVISION='${date1} '" > ./package/base-files/files/etc/openwrt_release1
+echo ${date1}' ' >> ./package/base-files/files/etc/banner
 echo '---------------------------------' >> ./package/base-files/files/etc/banner
 
 chmod +x ./package/*/root/etc/init.d/*  
