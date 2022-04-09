@@ -158,6 +158,7 @@ case "$TARGET_DEVICE" in
         # CONFIG_GRUB_CONSOLE is not set
         # CONFIG_ISO_IMAGES is not set
         # CONFIG_VDI_IMAGES is not set
+        CONFIG_PACKAGE_autocore-x86=y
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
@@ -177,7 +178,9 @@ cat  ../configx/extra-drivers.config >>.config
         CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
+        CONFIG_PACKAGE_autocore-arm=y
 EOF
+cat  ../configx/extra-drivers.config >>.config
     ;;
     "newifi-d2")
         cat >.config<<-EOF
@@ -268,7 +271,6 @@ esac
     CONFIG_PACKAGE_patch=y
     CONFIG_PACKAGE_diffutils=y
     CONFIG_PACKAGE_default-settings=y
-    CONFIG_PACKAGE_autocore-x86=y
     CONFIG_PACKAGE_luci-theme-opentopd=y
     CONFIG_BRCMFMAC_SDIO=y
     CONFIG_LUCI_LANG_en=y
@@ -466,32 +468,31 @@ case "$TARGET_DEVICE" in
     [[  $VERSION = plus ]] && {
     _packages "
     luci-app-adguardhome
-    luci-app-adguardhome_INCLUDE_binary
-    luci-app-vssr
+    #luci-app-adguardhome_INCLUDE_binary
+    #luci-app-vssr
     luci-app-ssr-plus
     luci-app-bypass
-    luci-app-passwall
+    #luci-app-passwall
     luci-app-openclash
     luci-app-socat
     luci-app-samba4
-    luci-app-netspeedtest
     luci-app-webadmin
     luci-app-unblockneteasemusic
-    luci-app-dnsfilter
-    luci-app-dockerman
-    luci-app-netdata
-    luci-app-qbittorrent
-    luci-app-netspeedtest
-    luci-app-smartdns
-    luci-app-deluge
-    luci-app-nlbwmon
-    luci-app-wrtbwmon
+    #luci-app-dnsfilter
+    #luci-app-dockerman
+    #luci-app-netdata
+    #luci-app-qbittorrent
+    #luci-app-netspeedtest
+    #luci-app-smartdns
+    #luci-app-deluge
+    #luci-app-nlbwmon
+    #luci-app-wrtbwmon
     luci-app-usb-printer
-    luci-app-pushbot
-    luci-app-ikoolproxy
-    luci-app-cifs-mount
+    #luci-app-pushbot
+    #luci-app-ikoolproxy
+    #luci-app-cifs-mount
     luci-app-uugamebooster
-    luci-app-aliyundrive-webdav
+    #luci-app-aliyundrive-webdav
     luci-app-usb-printer
     luci-theme-argon
     luci-theme-edge
@@ -513,6 +514,9 @@ case "$TARGET_DEVICE" in
     #AmuleWebUI-Reloaded htop lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
     #subversion-server #unixodbc #git-http
 
+    #docker
+    kmod-dm kmod-dummy kmod-ikconfig kmod-veth
+    kmod-nf-conntrack-netlink kmod-nf-ipvs
     #USB3.0支持
     kmod-usb2 kmod-usb2-pci kmod-usb3 autosamba-samba4
     kmod-fs-nfsd kmod-fs-nfs kmod-fs-nfs-v4
@@ -530,7 +534,7 @@ case "$TARGET_DEVICE" in
     wget -qO package/base-files/files/bin/bpm git.io/bpm && chmod +x package/base-files/files/bin/bpm
     wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
-        KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/armvirt/Makefile | cut -d = -f 2)"
+    KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/armvirt/Makefile | cut -d = -f 2)"
 
     }
     ;;
