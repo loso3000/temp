@@ -509,7 +509,39 @@ case "$TARGET_DEVICE" in
 "r4s"|"r2c"|"r2r")
     DEVICE_NAME="$TARGET_DEVICE"
     FIRMWARE_TYPE="sysupgrade"
+    
+    _packages "
+    luci-app-adguardhome
+    luci-app-ssr-plus
+    luci-app-bypass
+    luci-app-openclash
+    luci-app-socat
+    luci-app-samba4
+    luci-app-webadmin
+    luci-app-unblockneteasemusic
+    luci-app-usb-printer
+    luci-app-uugamebooster
+    luci-app-usb-printer
+    luci-theme-argon
+    luci-theme-edge
+    luci-app-passwall_INCLUDE_Brook
+    luci-app-passwall_INCLUDE_ChinaDNS_NG
+    luci-app-passwall_INCLUDE_Haproxy
+    luci-app-passwall_INCLUDE_Hysteria
+    luci-app-passwall_INCLUDE_Kcptun
+    luci-app-passwall_INCLUDE_NaiveProxy
+    luci-app-passwall_INCLUDE_PDNSD
+    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client
+    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server
+    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client
+    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server
+    luci-app-passwall_INCLUDE_Simple_Obfs
+    luci-app-passwall_INCLUDE_Trojan_Plus
+    luci-app-passwall_INCLUDE_V2ray
+    luci-app-passwall_INCLUDE_Xray
+    "
     [[  $VERSION = plus ]] && {
+    
     _packages "
     luci-app-adguardhome
     #luci-app-adguardhome_INCLUDE_binary
@@ -579,7 +611,6 @@ case "$TARGET_DEVICE" in
     wget -qO package/base-files/files/bin/ansi git.io/ansi && chmod +x package/base-files/files/bin/ansi
     grep CONFIG_TARGET_ROOTFS_PARTSIZE .config
     KERNEL_VER="$(grep "KERNEL_PATCHVER:="  ./target/linux/armvirt/Makefile | cut -d = -f 2)"
-
     }
     ;;
 "phicomm_k2p")
