@@ -333,10 +333,10 @@ git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
 rm -rf  ./package/build/luci-app-netspeedtest
 #rm -rf  package/emortal/autocore
-#rm -rf  package/emortal/autosamba
+rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
 rm ./package/build/autocore
-rm ./package/build/autosamba
+# rm ./package/build/autosamba
 rm ./package/build/pass/luci-app-ssr-plus
 rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/packages/net/wrtbwmon
