@@ -634,15 +634,14 @@ case "$TARGET_DEVICE" in
     DEVICE_NAME="x86_64"
     FIRMWARE_TYPE="squashfs-combined"
     _packages "
-    
-    luci-app-adguardhome
-    luci-app-ssr-plus
+    luci-app-smartdns
     luci-theme-argon
     luci-theme-edge
     luci-app-bypass
-    #luci-app-passwall
+    luci-app-passwall
     luci-app-openclash
     luci-app-netspeedtest
+    luci-app-unblockneteasemusic
     luci-app-passwall_INCLUDE_Brook
     luci-app-passwall_INCLUDE_ChinaDNS_NG
     luci-app-passwall_INCLUDE_Haproxy
