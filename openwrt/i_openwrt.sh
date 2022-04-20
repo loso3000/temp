@@ -271,7 +271,6 @@ esac
     CONFIG_PACKAGE_ipv6helper=y
     CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
     CONFIG_ALL_NONSHARED=y
-    
     ## luci app
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
@@ -293,6 +292,10 @@ esac
     CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Libev_Server=y
     CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Client=n
     CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Server=n    
+    
+    CONFIG_PACKAGE_udpspeeder=y
+    CONFIG_PACKAGE_udp2raw=y
+    
     ## remove
     # CONFIG_TARGET_IMAGES_GZIP is not set
     # CONFIG_PACKAGE_autosamba is not set
