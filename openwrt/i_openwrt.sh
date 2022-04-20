@@ -638,7 +638,9 @@ case "$TARGET_DEVICE" in
     luci-theme-argon
     luci-theme-edge
     luci-app-bypass
-    luci-app-passwall
+    luci-app-adguardhome
+    # luci-app-passwall
+    luci-app-ssr-plus
     luci-app-openclash
     luci-app-netspeedtest
     luci-app-unblockneteasemusic
