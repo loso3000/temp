@@ -166,17 +166,14 @@ EOF
 cat  ../configx/extra-drivers.config >>.config
 
     ;;
-    "r4s"|"r2c"|"r2r")
+    "r4s"|"r2c"|"r2r"|"r2s")
 cat >.config<<-EOF        
 CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
 CONFIG_TARGET_MULTI_PROFILE=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r2s=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
+CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-r2s=y
+CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
 CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-$TARGET_DEVICE=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_pine64_rockpro64=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_radxa_rock-pi-4=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_xunlong_orangepi-r1-plus=y
 CONFIG_TARGET_ALL_PROFILES=y
 
 # Image Config
@@ -509,7 +506,7 @@ case "$TARGET_DEVICE" in
     sed -i '/bypass/d' .config
     sed -i '/passwall/d' .config
     ;;
-"r4s"|"r2c"|"r2r")
+"r4s"|"r2c"|"r2r"|"r2s")
     DEVICE_NAME="$TARGET_DEVICE"
     FIRMWARE_TYPE="sysupgrade"
     
