@@ -238,7 +238,7 @@ esac
     CONFIG_PACKAGE_luci-app-control-weburl=y
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-timecontrol=y
-    CONFIG_PACKAGE_luci-app-zerotier=n
+    CONFIG_PACKAGE_luci-app-zerotier=y
     CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
@@ -473,10 +473,13 @@ case "$TARGET_DEVICE" in
     luci-app-adguardhome
     luci-app-ssr-plus
     luci-app-bypass
+    luci-app-passwall
+    luci-app-vssr
     luci-app-openclash
     luci-app-socat
     luci-app-samba4
     luci-app-webadmin
+    luci-app-smartdns
     luci-app-unblockneteasemusic
     luci-app-usb-printer
     luci-app-uugamebooster
