@@ -341,7 +341,6 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
 
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
     # https://github.com/kiddin9/openwrt-bypass
-    # https://github.com/fw876/helloworld
     #https://github.com/loso3000/openwrt-passwall
     #https://github.com/jerrykuku/luci-app-vssr.git
     # https://github.com/sirpdboy/sirpdboy-package/
@@ -354,6 +353,7 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/sirpdboy/luci-theme-opentopd.git
     # https://github.com/fw876/helloworld
 clone_url "
+    https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
