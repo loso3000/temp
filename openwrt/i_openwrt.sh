@@ -234,7 +234,9 @@ esac
     CONFIG_PACKAGE_luci-app-ddns=y
     CONFIG_PACKAGE_luci-app-wolplus=y
     CONFIG_PACKAGE_luci-app-advanced=y
+    CONFIG_PACKAGE_luci-app-beardropper=y
     CONFIG_PACKAGE_luci-app-rebootschedule=y
+    CONFIG_PACKAGE_luci-app-cowbping=y
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
@@ -289,13 +291,13 @@ rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-a
 
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
+git clone https://github.com/loso3000/other ./package/other
 rm -rf  ./package/build/luci-app-netspeedtest
 #rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
 rm ./package/build/autocore
-# rm ./package/build/autosamba
-rm ./package/build/pass/luci-app-ssr-plus
+# rm ./package/build/pass/luci-app-ssr-plus
 rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/packages/net/wrtbwmon
 rm -rf ./feeds/luci/applications/luci-app-netdata
@@ -324,7 +326,7 @@ sed -i 's/bootstrap/opentopd/g' feeds/luci/collections/luci/Makefile
 #echo "other"
 
 # sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
-sed -i 's/16384/165535/g' ./package/kernel/linux/files/sysctl-nf-conntrack.conf
+# sed -i 's/16384/165535/g' ./package/kernel/linux/files/sysctl-nf-conntrack.conf
 #koolproxy
 git clone https://github.com/iwrt/luci-app-ikoolproxy.git package/luci-app-ikoolproxy
 sed -i 's,1).dep,11).dep,g' ./package/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua 
@@ -333,14 +335,13 @@ echo "poweroff"
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/poweroff/poweroff.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_system/poweroff.htm 
 curl -fsSL  https://raw.githubusercontent.com/sirpdboy/other/master/patch/poweroff/system.lua > ./feeds/luci/modules/luci-mod-admin-full/luasrc/controller/admin/system.lua
 
-sed -i 's/option commit_interval 24h/option commit_interval 4h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为2
+sed -i 's/option commit_interval.*/option commit_interval 1h/g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为1
 sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
 git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./package/diy/luci-app-unblockneteasemusic
 
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
     # https://github.com/kiddin9/openwrt-bypass
     # https://github.com/fw876/helloworld
-    
     #https://github.com/loso3000/openwrt-passwall
     #https://github.com/jerrykuku/luci-app-vssr.git
     # https://github.com/sirpdboy/sirpdboy-package/
@@ -349,21 +350,20 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent-static
     # https://github.com/coolsnowwolf/packages/trunk/libs/qtbase
     #  https://github.com/coolsnowwolf/packages/trunk/utils/btrfs-progs
+    # https://github.com/sirpdboy/diy/trunk/luci-app-netspeedtest
+    # https://github.com/sirpdboy/luci-theme-opentopd.git
+    # https://github.com/fw876/helloworld
 clone_url "
-
-    https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
     https://github.com/linkease/nas-packages/trunk/network/services/linkease
-    https://github.com/sirpdboy/diy/trunk/luci-app-netspeedtest
     https://github.com/rufengsuixing/luci-app-zerotier.git
     https://github.com/rufengsuixing/luci-app-syncdial.git 
     https://github.com/tindy2013/openwrt-subconverter
     https://github.com/zxlhhyccc/luci-app-v2raya.git
     https://github.com/kiddin9/luci-app-dnsfilter
     https://github.com/QiuSimons/openwrt-mos
-    https://github.com/sirpdboy/luci-theme-opentopd.git
     https://github.com/jerrykuku/luci-theme-argon.git
     https://github.com/kiddin9/luci-theme-edge.git
     https://github.com/destan19/OpenAppFilter
@@ -600,8 +600,7 @@ case "$TARGET_DEVICE" in
     luci-theme-edge
     luci-app-bypass
     luci-app-adguardhome
-    # luci-app-passwall
-    luci-app-ssr-plus
+    luci-app-passwall
     luci-app-openclash
     luci-app-netspeedtest
     luci-app-unblockneteasemusic
