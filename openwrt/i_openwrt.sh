@@ -235,9 +235,8 @@ esac
     CONFIG_PACKAGE_luci-app-wolplus=y
     CONFIG_PACKAGE_luci-app-advanced=y
     CONFIG_PACKAGE_luci-app-rebootschedule=y
-    CONFIG_PACKAGE_luci-app-control-weburl=y
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
-    CONFIG_PACKAGE_luci-app-timecontrol=y
+    CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
     CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
