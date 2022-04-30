@@ -158,7 +158,7 @@ case "$TARGET_DEVICE" in
         # CONFIG_GRUB_CONSOLE is not set
         # CONFIG_ISO_IMAGES is not set
         # CONFIG_VDI_IMAGES is not set
-        CONFIG_PACKAGE_autocore-x86=y
+        CONFIG_PACKAGE_myautocore-x86=y
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
@@ -295,15 +295,15 @@ config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
 sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
-rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat}
-#rm -rf package/*/{autocore,autosamba,default-settings}
+rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-beardropper,}
+rm -rf package/*/{autocore,autosamba,default-settings}
 rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier,luci-app-wrtbwmon,luci-app-koolddns}
 
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
 git clone https://github.com/loso3000/other ./package/other
 rm -rf  ./package/build/luci-app-netspeedtest
-#rm -rf  package/emortal/autocore
+rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
 rm ./package/build/autocore
@@ -611,6 +611,8 @@ case "$TARGET_DEVICE" in
     luci-theme-edge
     luci-app-bypass
     #luci-app-adguardhome
+    luci-app-vssr
+    luci-app-ssr-plus
     luci-app-passwall
     luci-app-openclash
     luci-app-netspeedtest
@@ -800,7 +802,7 @@ sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' 
 
 #version
 date1='Ipv6-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-date1='Ipv6-Mini-S20220501 by Sirpdboy'
+date1='Ipv6-S20220501'
 case "$VERSION" in
 "mini")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220501-Ipv6-Mini-5.4-/g' include/image.mk
