@@ -234,10 +234,10 @@ esac
     ddns-scripts_cloudflare.com-v4=y
     ddns-scripts-cloudflare=y
     ddns-scripts_freedns_42_pl=y
-    ddns-scripts_godaddy.com-v1=y
+    #ddns-scripts_godaddy.com-v1=y
     ddns-scripts_no-ip_com=y
-    ddns-scripts_nsupdate=y
-    ddns-scripts_route53-v1=y
+    #ddns-scripts_nsupdate=y
+    #ddns-scripts_route53-v1=y
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
     CONFIG_PACKAGE_luci-app-upnp=y
@@ -611,7 +611,7 @@ case "$TARGET_DEVICE" in
     luci-theme-edge
     luci-app-bypass
     #luci-app-adguardhome
-    luci-app-vssr
+    #luci-app-vssr
     luci-app-ssr-plus
     luci-app-passwall
     luci-app-openclash
