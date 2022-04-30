@@ -228,6 +228,16 @@ esac
     CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
     CONFIG_ALL_NONSHARED=y
     ## luci app
+    ddns-scripts=y
+    ddns-scripts_dnspod=y
+    ddns-scripts_aliyun=y
+    ddns-scripts_cloudflare.com-v4=y
+    ddns-scripts-cloudflare=y
+    ddns-scripts_freedns_42_pl=y
+    ddns-scripts_godaddy.com-v1=y
+    ddns-scripts_no-ip_com=y
+    ddns-scripts_nsupdate=y
+    ddns-scripts_route53-v1=y
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
     CONFIG_PACKAGE_luci-app-upnp=y
@@ -240,7 +250,7 @@ esac
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
-    CONFIG_PACKAGE_luci-app-vlmcsd=y
+    #CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=n
@@ -308,6 +318,7 @@ rm -rf ./feeds/luci/applications/luci-app-samba
 rm -rf ./feeds/luci/applications/luci-app-wol
 rm -rf ./feeds/luci/applications/luci-app-unblockneteasemusic
 rm -rf ./feeds/luci/applications/luci-app-accesscontrol
+rm -rf ./feeds/luci/applications/luci-app-beardropper
 
 wget -qO package/base-files/files/etc/banner https://raw.githubusercontent.com/sirpdboy/build/master/banner
 wget -qO package/base-files/files/etc/profile https://raw.githubusercontent.com/sirpdboy/build/master/profile
@@ -504,7 +515,7 @@ case "$TARGET_DEVICE" in
     [[  $VERSION = plus ]] && {
     
     _packages "
-    luci-app-adguardhome
+    #luci-app-adguardhome
     #luci-app-adguardhome_INCLUDE_binary
     #luci-app-vssr
     luci-app-ssr-plus
@@ -530,7 +541,7 @@ case "$TARGET_DEVICE" in
     #luci-app-cifs-mount
     luci-app-uugamebooster
     #luci-app-aliyundrive-webdav
-    luci-app-usb-printer
+    #luci-app-usb-printer
     luci-theme-argon
     luci-theme-edge
     luci-app-passwall_INCLUDE_Brook
@@ -599,7 +610,7 @@ case "$TARGET_DEVICE" in
     luci-theme-argon
     luci-theme-edge
     luci-app-bypass
-    luci-app-adguardhome
+    #luci-app-adguardhome
     luci-app-passwall
     luci-app-openclash
     luci-app-netspeedtest
