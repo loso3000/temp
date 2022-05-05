@@ -234,10 +234,7 @@ esac
     ddns-scripts_cloudflare.com-v4=y
     ddns-scripts-cloudflare=y
     ddns-scripts_freedns_42_pl=y
-    #ddns-scripts_godaddy.com-v1=y
     ddns-scripts_no-ip_com=y
-    #ddns-scripts_nsupdate=y
-    #ddns-scripts_route53-v1=y
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
     CONFIG_PACKAGE_luci-app-upnp=y
@@ -250,15 +247,6 @@ esac
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
-    #CONFIG_PACKAGE_luci-app-vlmcsd=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=n
-    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Server=n
-    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Libev_Client=y
-    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Libev_Server=y
-    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Client=n
-    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Server=n    
     
     CONFIG_PACKAGE_udpspeeder=y
     CONFIG_PACKAGE_udp2raw=y
@@ -364,7 +352,7 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/sirpdboy/luci-theme-opentopd.git
     # https://github.com/fw876/helloworld
 clone_url "
-    https://github.com/fw876/helloworld
+    #https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
@@ -611,7 +599,7 @@ case "$TARGET_DEVICE" in
     luci-theme-edge
     luci-app-bypass
     #luci-app-adguardhome
-    #luci-app-vssr
+    luci-app-vssr
     luci-app-ssr-plus
     luci-app-passwall
     luci-app-openclash
