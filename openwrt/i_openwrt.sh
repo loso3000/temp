@@ -232,9 +232,6 @@ esac
     ddns-scripts_dnspod=y
     ddns-scripts_aliyun=y
     ddns-scripts_cloudflare.com-v4=y
-    ddns-scripts-cloudflare=y
-    ddns-scripts_freedns_42_pl=y
-    ddns-scripts_no-ip_com=y
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
     CONFIG_PACKAGE_luci-app-upnp=y
@@ -248,9 +245,15 @@ esac
     CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
     
-    CONFIG_PACKAGE_udpspeeder=y
-    CONFIG_PACKAGE_udp2raw=y
-    
+    CONFIG_PACKAGE_luci-app-vlmcsd=y
+    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
+    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
+    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=n
+    CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Server=n
+    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Libev_Client=y
+    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Libev_Server=y
+    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Client=n
+    CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Server=n    
     ## remove
     # CONFIG_TARGET_IMAGES_GZIP is not set
     # CONFIG_PACKAGE_autosamba is not set
@@ -290,7 +293,7 @@ rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-a
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
 git clone https://github.com/loso3000/other ./package/other
-rm -rf  ./package/build/luci-app-netspeedtest
+# rm -rf  ./package/build/luci-app-netspeedtest
 rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
@@ -476,29 +479,10 @@ case "$TARGET_DEVICE" in
     luci-app-openclash
     luci-app-socat
     luci-app-samba4
-    luci-app-webadmin
     luci-app-smartdns
     luci-app-unblockneteasemusic
-    luci-app-usb-printer
-    luci-app-uugamebooster
-    luci-app-usb-printer
     luci-theme-argon
     luci-theme-edge
-    luci-app-passwall_INCLUDE_Brook
-    luci-app-passwall_INCLUDE_ChinaDNS_NG
-    luci-app-passwall_INCLUDE_Haproxy
-    luci-app-passwall_INCLUDE_Hysteria
-    luci-app-passwall_INCLUDE_Kcptun
-    luci-app-passwall_INCLUDE_NaiveProxy
-    luci-app-passwall_INCLUDE_PDNSD
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server
-    luci-app-passwall_INCLUDE_Simple_Obfs
-    luci-app-passwall_INCLUDE_Trojan_Plus
-    luci-app-passwall_INCLUDE_V2ray
-    luci-app-passwall_INCLUDE_Xray
     "
     [[  $VERSION = plus ]] && {
     
@@ -550,9 +534,6 @@ case "$TARGET_DEVICE" in
     #AmuleWebUI-Reloaded htop lscpu lsscsi lsusb nano pciutils screen webui-aria2 zstd tar pv
     #subversion-server #unixodbc #git-http
 
-    #docker
-    kmod-dm kmod-dummy kmod-ikconfig kmod-veth
-    kmod-nf-conntrack-netlink kmod-nf-ipvs
     #USB3.0支持
     kmod-usb2 kmod-usb2-pci kmod-usb3 autosamba-samba4
     kmod-fs-nfsd kmod-fs-nfs kmod-fs-nfs-v4
@@ -617,7 +598,6 @@ case "$TARGET_DEVICE" in
     #USB_net_driver
     kmod-mt76 kmod-mt76x2u kmod-rtl8821cu kmod-rtl8192cu kmod-rtl8812au-ac
     kmod-usb-net-asix-ax88179 kmod-usb-net-cdc-ether kmod-usb-net-rndis
-    #usb-modeswitch kmod-usb-net-rtl8152
     #docker
     kmod-dm kmod-dummy kmod-ikconfig kmod-veth
     kmod-nf-conntrack-netlink kmod-nf-ipvs
@@ -625,7 +605,7 @@ case "$TARGET_DEVICE" in
     acpid ath10k-firmware-qca9888 autosamba-samba4 kmod-igc
     ath10k-firmware-qca988x ath10k-firmware-qca9984
     brcmfmac-firmware-43602a1-pcie irqbalance wget kmod-ntfs-3g
-    kmod-alx kmod-ath10k kmod-bonding kmod-ath9k
+    kmod-alx kmod-ath10k kmod-bonding kmod-drm-ttm kmod-backlight
     kmod-igbvf kmod-iwlwifi kmod-ixgbevf e2fsprogs wget htop
     kmod-mmc-spi kmod-r8168 kmod-rtl8xxxu kmod-sdhci ppp-mod-pptp xl2tpd uqmi
     kmod-tg3 lm-sensors-detect snmpd kmod-vmxnet3 f2fs-tools f2fsck resize2fs
