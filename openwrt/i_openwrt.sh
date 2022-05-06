@@ -295,7 +295,7 @@ rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
 rm ./package/build/autocore
-# rm ./package/build/pass/luci-app-ssr-plus
+rm ./package/build/pass/luci-app-ssr-plus
 rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/packages/net/wrtbwmon
 rm -rf ./feeds/luci/applications/luci-app-netdata
@@ -352,7 +352,7 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/sirpdboy/luci-theme-opentopd.git
     # https://github.com/fw876/helloworld
 clone_url "
-    #https://github.com/fw876/helloworld
+    https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
@@ -598,28 +598,14 @@ case "$TARGET_DEVICE" in
     luci-theme-argon
     luci-theme-edge
     luci-app-bypass
-    #luci-app-adguardhome
-    luci-app-vssr
+    luci-app-adguardhome
+    #luci-app-vssr
     luci-app-ssr-plus
-    luci-app-passwall
+    #luci-app-passwall
     luci-app-openclash
-    luci-app-netspeedtest
+    luci-app-v2ray
+    #luci-app-netspeedtest
     luci-app-unblockneteasemusic
-    luci-app-passwall_INCLUDE_Brook
-    luci-app-passwall_INCLUDE_ChinaDNS_NG
-    luci-app-passwall_INCLUDE_Haproxy
-    luci-app-passwall_INCLUDE_Hysteria
-    luci-app-passwall_INCLUDE_Kcptun
-    luci-app-passwall_INCLUDE_NaiveProxy
-    luci-app-passwall_INCLUDE_PDNSD
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client
-    luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client
-    luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server
-    luci-app-passwall_INCLUDE_Simple_Obfs
-    luci-app-passwall_INCLUDE_Trojan_Plus
-    luci-app-passwall_INCLUDE_V2ray
-    luci-app-passwall_INCLUDE_Xray
     luci-app-samba4
     luci-app-webadmin
     luci-app-socat
@@ -790,7 +776,7 @@ sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' 
 
 #version
 date1='Ipv6-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-date1='Ipv6-S20220501'
+date1='Ipv6-S20220506'
 case "$VERSION" in
 "mini")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220501-Ipv6-Mini-5.4-/g' include/image.mk
