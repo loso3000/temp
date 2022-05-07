@@ -158,7 +158,7 @@ case "$TARGET_DEVICE" in
         # CONFIG_GRUB_CONSOLE is not set
         # CONFIG_ISO_IMAGES is not set
         # CONFIG_VDI_IMAGES is not set
-        CONFIG_PACKAGE_myautocore-x86=y
+        # CONFIG_PACKAGE_myautocore-x86=y
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
