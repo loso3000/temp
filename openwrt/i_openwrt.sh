@@ -284,7 +284,7 @@ EOF
 
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
-sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
+sed -i "s/192.168.1.1/192.168.1.1/" $config_generate
 
 rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-beardropper}
 rm -rf package/*/{autocore,autosamba,default-settings}
@@ -756,7 +756,7 @@ sed -i 's/请输入用户名和密码。/欢迎使用!请输入用户密码~/g' 
 
 #version
 date1='Ipv6-R'`TZ=UTC-8 date +%Y.%m.%d -d +"12"hour`
-date1='Ipv6-S20220506'
+date1='Ipv6-S20220508'
 case "$VERSION" in
 "mini")
        sed -i 's/$(VERSION_DIST_SANITIZED)-$(IMG_PREFIX_VERNUM)$(IMG_PREFIX_VERCODE)$(IMG_PREFIX_EXTRA)/20220501-Ipv6-Mini-5.4-/g' include/image.mk
