@@ -286,7 +286,7 @@ EOF
 
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
-sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
+sed -i "s/192.168.1.1/192.168.1.1/" $config_generate
 
 rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-beardropper}
 rm -rf package/*/{autocore,autosamba,default-settings}
