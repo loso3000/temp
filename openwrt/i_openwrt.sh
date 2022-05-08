@@ -160,7 +160,8 @@ case "$TARGET_DEVICE" in
         # CONFIG_GRUB_CONSOLE is not set
         # CONFIG_ISO_IMAGES is not set
         # CONFIG_VDI_IMAGES is not set
-        # CONFIG_PACKAGE_myautocore-x86=y
+        # CONFIG_PACKAGE_autocore-x86 is not set
+        CONFIG_PACKAGE_myautocore-x86=y
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
@@ -178,6 +179,8 @@ cat  ../configx/extra-drivers.config >>.config
         # CONFIG_TARGET_rockchip_armv8_DEVICE_xunlong_orangepi-r1-plus is not set
         # CONFIG_TARGET_rockchip_armv8_DEVICE_xunlong_orangepi-r1-plus-lts is not set
         CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
+        # CONFIG_PACKAGE_autocore-arm is not set
+        CONFIG_PACKAGE_myautocore-arm=y
         CONFIG_BUILD_NLS=y
         CONFIG_BUILD_PATENTED=y
 EOF
@@ -189,6 +192,8 @@ cat  ../configx/extra-drivers.config >>.config
         CONFIG_TARGET_ramips=y
         CONFIG_TARGET_ramips_mt7621=y
         CONFIG_TARGET_ramips_mt7621_DEVICE_d-team_newifi-d2=y
+        # CONFIG_PACKAGE_autocore-arm is not set
+        CONFIG_PACKAGE_myautocore-arm=y
 EOF
     ;;
     "phicomm_k2p")
@@ -196,6 +201,8 @@ EOF
         CONFIG_TARGET_ramips=y
         CONFIG_TARGET_ramips_mt7621=y
         CONFIG_TARGET_ramips_mt7621_DEVICE_phicomm_k2p=y
+        # CONFIG_PACKAGE_autocore-arm is not set
+        CONFIG_PACKAGE_myautocore-arm=y
 EOF
     ;;
     "asus_rt-n16")
@@ -204,6 +211,8 @@ EOF
             CONFIG_TARGET_brcm47xx=y
             CONFIG_TARGET_brcm47xx_mips74k=y
             CONFIG_TARGET_brcm47xx_mips74k_DEVICE_asus_rt-n16=y
+            # CONFIG_PACKAGE_autocore-arm is not set
+            CONFIG_PACKAGE_myautocore-arm=y
 EOF
         else
             cat >.config<<-EOF
@@ -211,6 +220,8 @@ EOF
             CONFIG_TARGET_bcm47xx_mips74k=y
             CONFIG_TARGET_bcm47xx_mips74k_DEVICE_asus_rt-n16=y
             # CONFIG_TARGET_IMAGES_GZIP is not set
+            # CONFIG_PACKAGE_autocore-arm is not set
+            CONFIG_PACKAGE_myautocore-arm=y
 EOF
         fi
     ;;
@@ -219,6 +230,8 @@ EOF
         CONFIG_TARGET_armvirt=y
         CONFIG_TARGET_armvirt_64=y
         CONFIG_TARGET_armvirt_64_Default=y
+        # CONFIG_PACKAGE_autocore-arm is not set
+        CONFIG_PACKAGE_myautocore-arm=y
 EOF
     ;;
 esac
@@ -293,7 +306,7 @@ EOF
 
 config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
-sed -i "s/192.168.1.1/192.168.1.1/" $config_generate
+sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
 rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-beardropper}
 rm -rf package/*/{autocore,autosamba,default-settings}
