@@ -139,7 +139,7 @@ BEGIN_TIME=$(date '+%H:%M:%S')
 status
 
 : >.config
-[ $PARTSIZE ] || PARTSIZE=920
+[ $PARTSIZE ] || PARTSIZE=926
 case "$TARGET_DEVICE" in
     "x86_64")
         cat >.config<<-EOF
@@ -230,10 +230,18 @@ esac
     CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
     CONFIG_ALL_NONSHARED=y
     ## luci app
-    ddns-scripts=y
-    ddns-scripts_dnspod=y
-    ddns-scripts_aliyun=y
-    ddns-scripts_cloudflare.com-v4=y
+    CONFIG_PACKAGE_ddns-scripts=y
+    CONFIG_PACKAGE_ddns-scripts_aliyun=y
+    CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4=y
+    CONFIG_PACKAGE_ddns-scripts_cnkuai_cn=y
+    CONFIG_PACKAGE_ddns-scripts_digitalocean.com-v2=y
+    CONFIG_PACKAGE_ddns-scripts_dnspod=y
+    CONFIG_PACKAGE_ddns-scripts_freedns_42_pl=y
+    CONFIG_PACKAGE_ddns-scripts_godaddy.com-v1=y
+    CONFIG_PACKAGE_ddns-scripts_no-ip_com=y
+    CONFIG_PACKAGE_ddns-scripts_nsupdate=y
+    CONFIG_PACKAGE_ddns-scripts_route53-v1=y
+    CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4=y
     CONFIG_PACKAGE_miniupnpd-igdv1=y
     CONFIG_PACKAGE_luci-app-arpbind=y
     CONFIG_PACKAGE_luci-app-upnp=y
@@ -246,7 +254,6 @@ esac
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
-    
     CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
@@ -290,7 +297,7 @@ sed -i "s/192.168.1.1/192.168.1.1/" $config_generate
 
 rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-beardropper}
 rm -rf package/*/{autocore,autosamba,default-settings}
-rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-vssr,luci-app-ssr-plus,luci-app-passwall,luci-app-syncdial,luci-app-zerotier,luci-app-wrtbwmon,luci-app-koolddns}
+rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-ssr-plus,luci-app-syncdial,luci-app-wrtbwmon}
 
 git clone https://github.com/sirpdboy/build.git ./package/build
 git clone https://github.com/sirpdboy/sirpdboy-package ./package/diy
@@ -356,13 +363,13 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/sirpdboy/diy/trunk/luci-app-netspeedtest
     # https://github.com/sirpdboy/luci-theme-opentopd.git
     # https://github.com/fw876/helloworld
+    #https://github.com/rufengsuixing/luci-app-zerotier.git
 clone_url "
     https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
     https://github.com/linkease/nas-packages/trunk/network/services/linkease
-    https://github.com/rufengsuixing/luci-app-zerotier.git
     https://github.com/rufengsuixing/luci-app-syncdial.git 
     https://github.com/tindy2013/openwrt-subconverter
     https://github.com/zxlhhyccc/luci-app-v2raya.git
@@ -586,8 +593,8 @@ case "$TARGET_DEVICE" in
     luci-app-ssr-plus
     #luci-app-passwall
     luci-app-openclash
-    luci-app-v2ray
-    #luci-app-netspeedtest
+    luci-app-v2raya
+    luci-app-netspeedtest
     luci-app-unblockneteasemusic
     luci-app-samba4
     luci-app-webadmin
