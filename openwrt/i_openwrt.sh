@@ -295,8 +295,6 @@ esac
     CONFIG_PACKAGE_openssh-sftp-server=y
     CONFIG_PACKAGE_automount=y
     CONFIG_PACKAGE_fdisk=y
-    CONFIG_PACKAGE_patch=y
-    CONFIG_PACKAGE_diffutils=y
     CONFIG_PACKAGE_default-settings=y
     CONFIG_PACKAGE_luci-theme-opentopd=y
     CONFIG_BRCMFMAC_SDIO=y
