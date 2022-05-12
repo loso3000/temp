@@ -49,7 +49,6 @@ status() {
     else
         printf "%35s %s %s %s %s %s %s\n" \
         `echo -e "[ $(color cr ✕)\033[0;39m ]${_date}"`
-        exit 1
     fi
 }
 
@@ -97,9 +96,9 @@ clone_url() {
 						g=$(find package/ feeds/ -maxdepth 5 -type d -name $x 2>/dev/null)
 						if ([[ -d "$g" ]] && rm -rf $g); then
 							k="$g"
-                        else
-                            k="package/A"
-                        fi
+						else
+							k="package/A"
+						fi
 
                         if mv -f ../${w##*/}/$x $k; then
                             [[ $k = $g ]] && \
@@ -114,19 +113,27 @@ clone_url() {
         fi
     done
 }
-[[ $REPO_BRANCH ]] && cmd="-b $REPO_BRANCH" || cmd="-b openwrt-18.06-k5.4"
-REPO_URL=https://github.com/immortalwrt/immortalwrt
-# REPO_URL=https://github.com/coolsnowwolf/lede
-# cmd="master"
 
-echo -e "$(color cy 当前的机型) $(color cb ${REPO_BRANCH}-${TARGET_DEVICE}-${VERSION})"
+REPO_URL=https://github.com/immortalwrt/immortalwrt
+if [[ $REPO_BRANCH == "openwrt-18.06-k5.4" || $REPO_BRANCH == "openwrt-21.02" || $REPO_BRANCH == "openwrt-18.06" ]]; then
+	cmd="-b $REPO_BRANCH"
+else
+	if [[ $REPO_BRANCH == "master" || $REPO_BRANCH == "openwrt-18.06-dev" ]]; then
+		cmd="-b openwrt-18.06-k5.4"
+		kk=1
+	else
+		cmd="-b openwrt-18.06-k5.4"
+	fi
+fi
+
 echo -e "$(color cy '拉取源码....')\c"
 BEGIN_TIME=$(date '+%H:%M:%S')
 
-git clone --depth 1 $REPO_URL -b $cmd  $REPO_FLODER
+# git clone --depth 1 $REPO_URL -b $cmd  $REPO_FLODER
 git clone -q $REPO_URL $cmd $REPO_FLODER
 status
 
+echo -e "$(color cy 当前的机型) $(color cb ${REPO_BRANCH}-${TARGET_DEVICE}-${VERSION})"
 cd $REPO_FLODER || exit
 echo -e "$(color cy '更新软件....')\c"
 BEGIN_TIME=$(date '+%H:%M:%S')
@@ -169,21 +176,29 @@ EOF
 cat  ../configx/extra-drivers.config >>.config
 
     ;;
-    "r4s"|"r2c"|"r2r"|"r2s")
-        cat >.config<<-EOF        
-        CONFIG_TARGET_rockchip=y
-        CONFIG_TARGET_rockchip_armv8=y
-        CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-$TARGET_DEVICE=y
-        # CONFIG_TARGET_rockchip_armv8_DEVICE_pine64_rockpro64 is not set
-        # CONFIG_TARGET_rockchip_armv8_DEVICE_radxa_rock-pi-4 is not set
-        # CONFIG_TARGET_rockchip_armv8_DEVICE_xunlong_orangepi-r1-plus is not set
-        # CONFIG_TARGET_rockchip_armv8_DEVICE_xunlong_orangepi-r1-plus-lts is not set
-        CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
-        # CONFIG_PACKAGE_autocore-arm is not set
-        CONFIG_PACKAGE_myautocore-arm=y
-        CONFIG_BUILD_NLS=y
-        CONFIG_BUILD_PATENTED=y
-EOF
+	"r4s"|"r2c"|"r2s")
+		cat<<-EOF >.config
+		CONFIG_TARGET_rockchip=y
+		CONFIG_TARGET_rockchip_armv8=y
+		CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-$TARGET_DEVICE=y
+		CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
+		CONFIG_BUILD_NLS=y
+		CONFIG_BUILD_PATENTED=y
+		EOF
+
+cat  ../configx/extra-drivers.config >>.config
+	;;
+	"r1-plus-lts"|"r1-plus")
+		cat<<-EOF >.config
+		CONFIG_TARGET_rockchip=y
+		CONFIG_TARGET_rockchip_armv8=y
+		CONFIG_TARGET_rockchip_armv8_DEVICE_xunlong_orangepi-$TARGET_DEVICE=y
+		CONFIG_TARGET_ROOTFS_PARTSIZE=$PARTSIZE
+		# CONFIG_PACKAGE_autocore-arm is not set
+		CONFIG_PACKAGE_myautocore-arm=y
+		CONFIG_BUILD_NLS=y
+		CONFIG_BUILD_PATENTED=y
+		EOF
 
 cat  ../configx/extra-drivers.config >>.config
     ;;
@@ -204,6 +219,7 @@ EOF
         # CONFIG_PACKAGE_autocore-arm is not set
         CONFIG_PACKAGE_myautocore-arm=y
 EOF
+		clone_url "https://github.com/openwrt/routing/branches/openwrt-19.07/batman-adv"
     ;;
     "asus_rt-n16")
         if [[ "${REPO_BRANCH#*-}" = "18.06" || "${REPO_BRANCH#*-}" = "18.06-dev" ]]; then
@@ -267,6 +283,7 @@ esac
     CONFIG_PACKAGE_luci-app-control-speedlimit=y
     CONFIG_PACKAGE_luci-app-control-parentcontrol=y
     CONFIG_PACKAGE_luci-app-zerotier=y
+    
     CONFIG_PACKAGE_luci-app-vlmcsd=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
     CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
@@ -295,6 +312,8 @@ esac
     CONFIG_PACKAGE_openssh-sftp-server=y
     CONFIG_PACKAGE_automount=y
     CONFIG_PACKAGE_fdisk=y
+    CONFIG_PACKAGE_patch=y
+    CONFIG_PACKAGE_diffutils=y
     CONFIG_PACKAGE_default-settings=y
     CONFIG_PACKAGE_luci-theme-opentopd=y
     CONFIG_BRCMFMAC_SDIO=y
@@ -306,7 +325,7 @@ config_generate="package/base-files/files/bin/config_generate"
 color cy "自定义设置.... "
 sed -i "s/192.168.1.1/192.168.8.1/" $config_generate
 
-rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-socat,luci-app-beardropper}
+rm -rf feeds/*/*/{netdata,smartdns,wrtbwmon,adguardhome,luci-app-smartdns,luci-app-timecontrol,luci-app-smartinfo,luci-app-beardropper}
 rm -rf package/*/{autocore,autosamba,default-settings}
 rm -rf feeds/*/*/{luci-app-adguardhome,luci-app-appfilter,open-app-filter,luci-app-openclash,luci-app-ssr-plus,luci-app-syncdial,luci-app-wrtbwmon}
 
@@ -317,8 +336,7 @@ git clone https://github.com/loso3000/other ./package/other
 rm -rf  package/emortal/autocore
 rm -rf  package/emortal/autosamba
 rm -rf  package/emortal/default-settings
-rm ./package/build/autocore
-rm ./package/build/pass/luci-app-ssr-plus
+# rm ./package/build/pass/luci-app-ssr-plus
 rm -rf ./feeds/packages/net/smartdns
 rm -rf ./feeds/packages/net/wrtbwmon
 rm -rf ./feeds/luci/applications/luci-app-netdata
@@ -363,8 +381,7 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
 
 [[ -d "package/A" ]] || mkdir -m 755 -p package/A
     # https://github.com/kiddin9/openwrt-bypass
-    #https://github.com/loso3000/openwrt-passwall
-    #https://github.com/jerrykuku/luci-app-vssr.git
+    # https://github.com/jerrykuku/luci-app-vssr.git
     # https://github.com/sirpdboy/sirpdboy-package/
     # https://github.com/coolsnowwolf/packages/trunk/libs/qttools
     # https://github.com/coolsnowwolf/packages/trunk/net/qBittorrent
@@ -374,9 +391,8 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git  ./pac
     # https://github.com/sirpdboy/diy/trunk/luci-app-netspeedtest
     # https://github.com/sirpdboy/luci-theme-opentopd.git
     # https://github.com/fw876/helloworld
-    #https://github.com/rufengsuixing/luci-app-zerotier.git
 clone_url "
-    https://github.com/fw876/helloworld
+    # https://github.com/fw876/helloworld
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
     https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
     https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
@@ -445,7 +461,7 @@ sed -i 's/option dports.*/option dports 2/' feeds/luci/applications/luci-app-vss
     [[ -d package/A/qtbase ]] && rm -rf feeds/packages/libs/qt5
 }
 
-[[ "$REPO_BRANCH" == "openwrt-21.02" ]] && {
+[[ "${REPO_BRANCH#*-}" == "21.02" ]] && {
     # sed -i 's/services/nas/' feeds/luci/*/*/*/*/*/*/menu.d/*transmission.json
     sed -i 's/^ping/-- ping/g' package/*/*/*/*/*/bridge.lua
 } || {
@@ -604,8 +620,8 @@ case "$TARGET_DEVICE" in
     luci-app-ssr-plus
     #luci-app-passwall
     luci-app-openclash
-    luci-app-v2raya
-    luci-app-netspeedtest
+    luci-app-v2ray
+    #luci-app-netspeedtest
     luci-app-unblockneteasemusic
     luci-app-samba4
     luci-app-webadmin
@@ -764,6 +780,8 @@ sed -i 's/解锁网易云灰色歌曲/解锁灰色歌曲/g'  `grep "解锁网易
 sed -i 's/解除网易云音乐播放限制/解锁灰色歌曲/g'  `grep "解除网易云音乐播放限制" -rl ./`
 sed -i 's/家庭云//g'  `grep "家庭云" -rl ./`
 
+
+sed -i 's/msgstr "Socat"/msgstr "端口转发"/g' ./feeds/luci/applications/luci-app-socat/po/zh-cn/socat.po
 sed -i 's/aMule设置/电驴下载/g' ./feeds/luci/applications/luci-app-amule/po/zh-cn/amule.po
 sed -i 's/监听端口/监听端口 用户名admin密码adminadmin/g' ./feeds/luci/applications/luci-app-qbittorrent/po/zh-cn/qbittorrent.po
 
